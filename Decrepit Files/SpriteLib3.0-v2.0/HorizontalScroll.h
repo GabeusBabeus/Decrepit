@@ -19,12 +19,14 @@ public:
 	void SetCam(Camera* cam);
 	void SetFocus(Transform* focus);
 	void SetOffset(float offset);
+	void setSpawnCam(bool torf);
 
 private:
 	Camera* m_cam = nullptr;
 	Transform* m_focus = nullptr;
 
 	float m_offset = 5.f;
+	bool spawnCam = true;
 };
 
 //Sends vertical scrolling camera TO json file

@@ -714,6 +714,7 @@ void ForestScene::KeyboardHold()
 	{
 		player.ScaleBody(-1.3 * Timer::deltaTime, 0);
 	}
+	
 }
 
 void ForestScene::KeyboardDown()

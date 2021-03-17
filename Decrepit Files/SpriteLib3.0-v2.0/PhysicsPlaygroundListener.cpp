@@ -1,7 +1,8 @@
 #include "PhysicsPlaygroundListener.h"
 
 #include "ECS.h"
-
+#include "Utilities.h"
+using namespace std;
 PhysicsPlaygroundListener::PhysicsPlaygroundListener()
 	: b2ContactListener()
 {
@@ -31,18 +32,67 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 
 	b2Filter filterA = fixtureA->GetFilterData();
 	b2Filter filterB = fixtureB->GetFilterData();
+	auto& playerJump = ECS::GetComponent<CanJump>((int)fixtureB->GetBody()->GetUserData());
+	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == GROUND) || (filterB.categoryBits == PLAYER && filterA.categoryBits == GROUND))
 	{
 		if (filterA.categoryBits == PLAYER)
 		{
-			ECS::GetComponent<CanJump>((int)fixtureA->GetBody()->GetUserData()).m_canJump = true;
+			playerJump.m_canJump = true;
+			playerJump.m_wallJumpNum = 1;
 		}
 		else if (filterB.categoryBits == PLAYER)
 		{
-			ECS::GetComponent<CanJump>((int)fixtureB->GetBody()->GetUserData()).m_canJump = true;
+			playerJump.m_canJump = true;
+			playerJump.m_wallJumpNum = 1;
 		}
 	}
+	if((filterA.categoryBits == PLAYER && filterB.categoryBits == ENEMY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == ENEMY))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
+			player.SetVelocity(vec3(0, 0, 0));
+			player.SetPosition(b2Vec2(-100, -40), true);
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
+			player.SetVelocity(vec3(0, 0, 0));
+			player.SetPosition(b2Vec2(-100, -40), true);
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+		}
+	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == WALL) || (filterB.categoryBits == PLAYER && filterA.categoryBits == WALL))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+			cout << "TEST";
+			playerJump.m_wallJump = true;
+			if (player.GetPosition().x > fixtureB->GetBody()->GetPosition().x) {
+				playerJump.m_facingRight = true;
+			}
+			else {
+				playerJump.m_facingRight = false;
+			}
+			
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+			cout << "TEST";
+			playerJump.m_wallJump = true;
+			if (player.GetPosition().x > fixtureA->GetBody()->GetPosition().x) {
+				playerJump.m_facingRight = true;
+			}
+			else {
+				playerJump.m_facingRight = false;
+			}
+			
+		}
+	}
+	
 
 }
 
@@ -66,6 +116,7 @@ void PhysicsPlaygroundListener::EndContact(b2Contact* contact)
 			TriggerExit(fixtureB);
 		}
 	}
+	ECS::GetComponent<CanJump>((int)fixtureB->GetBody()->GetUserData()).m_wallJump = false;
 }
 
 void PhysicsPlaygroundListener::TriggerEnter(b2Fixture* sensor)
