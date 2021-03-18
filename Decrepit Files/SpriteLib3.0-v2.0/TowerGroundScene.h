@@ -26,7 +26,7 @@ protected:
 	std::string m_fileInput;
 
 	PhysicsPlaygroundListener listener;
-
+	bool doorOpen = false;
 	int doubleJump = 0;
 	int puzzleWall1;
 	int puzzleWall2;

@@ -198,6 +198,15 @@
     <ClInclude Include="TowerGroundScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LadderTrigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationController.cpp">
@@ -372,6 +381,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TowerGroundScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LadderTrigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

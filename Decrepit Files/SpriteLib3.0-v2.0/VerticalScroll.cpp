@@ -11,9 +11,9 @@ void VerticalScroll::Update()
 		float difference = m_focus->GetPosition().y - (m_cam->m_localPosition.y + m_offset);
 		cout << m_cam->m_localPosition.y << endl;
 		//Adjust the camera
-		//if (m_cam->m_localPosition.y > 143) { //STOP THE CAM FROM GOING TO FAR RIGHT
-		//	difference = 0.f;
-		//}
+		if (m_cam->m_localPosition.y > 155) { //STOP THE CAM FROM GOING TO FAR RIGHT
+			difference = 0.f;
+		}
 		m_cam->SetPosition(vec3(m_cam->GetPosition().x, m_cam->GetPosition().y + difference, m_cam->GetPosition().z));
 	}
 

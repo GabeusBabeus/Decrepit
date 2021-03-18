@@ -14,6 +14,7 @@
 #include "TranslateTrigger.h"
 #include "HorizontalScroll.h"
 #include "CanJump.h"
+#include "Door.h"
 
 
 class ECS abstract
@@ -52,6 +53,9 @@ public:
 	//Side stuff for entity identifier
 	static void SetIsMainCamera(unsigned entity, bool mainCamera);
 	static void SetIsMainPlayer(unsigned entity, bool mainPlayer);
+	static void SetIsDoorBasement(unsigned entity, bool door);
+	static void SetIsKeyOne(unsigned entity, bool key);
+	//static void SetIsKeyTwo(unsigned entity, bool key);
 
 	static entt::registry* m_reg;
 };

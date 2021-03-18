@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "ForestScene.h"
 #include "TowerGroundScene.h"
+#include "MainMenu.h"
 #include <random>
 
 
@@ -45,9 +46,22 @@ void Game::InitGame()
 	m_scenes.push_back(new TowerGroundScene("Level 1"));
 	m_scenes.push_back(new PhysicsPlayground("Tower Base"));
 	m_scenes.push_back(new AnimationSpritePlayground("Animation TIEM!!!!"));
+	m_scenes.push_back(new MainMenu("Decrepit"));
 	 
 	//Sets active scene reference to our scene
+<<<<<<< Updated upstream
 	m_activeScene = m_scenes[1];
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+	m_activeScene = m_scenes[5];
+=======
+	m_activeScene = m_scenes[1];
+>>>>>>> main
+=======
+	m_activeScene = m_scenes[1];
+>>>>>>> main
+>>>>>>> Stashed changes
 
 	m_activeScene->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 

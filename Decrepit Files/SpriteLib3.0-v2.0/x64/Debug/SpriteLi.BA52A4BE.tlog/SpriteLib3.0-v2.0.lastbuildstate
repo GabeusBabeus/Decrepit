@@ -1,2 +1,14 @@
 PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.28.29333:TargetPlatformVersion=10.0.18362.0:
+<<<<<<< Updated upstream
 Debug|x64|C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\|
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+Debug|x64|C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\|
+=======
+Debug|x64|C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\|
+>>>>>>> main
+=======
+Debug|x64|C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\|
+>>>>>>> main
+>>>>>>> Stashed changes

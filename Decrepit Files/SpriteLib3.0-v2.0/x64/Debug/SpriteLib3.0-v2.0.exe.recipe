@@ -2,7 +2,19 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< Updated upstream
       <FullPath>C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe</FullPath>
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+      <FullPath>C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe</FullPath>
+=======
+      <FullPath>C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe</FullPath>
+>>>>>>> main
+=======
+      <FullPath>C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe</FullPath>
+>>>>>>> main
+>>>>>>> Stashed changes
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

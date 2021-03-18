@@ -34,6 +34,8 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 	b2Filter filterB = fixtureB->GetFilterData();
 	auto& playerJump = ECS::GetComponent<CanJump>((int)fixtureB->GetBody()->GetUserData());
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
+	auto& keyOne = ECS::GetComponent<PhysicsBody>(MainEntities::keyOne());
+	auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
 
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == GROUND) || (filterB.categoryBits == PLAYER && filterA.categoryBits == GROUND))
 	{
@@ -90,6 +92,47 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 				playerJump.m_facingRight = false;
 			}
 			
+		}
+	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == KEY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == KEY))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+			keyOne.SetPosition(b2Vec2(-100, -400), true);
+			door.haveKey = true;
+
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+			keyOne.SetPosition(b2Vec2(-100, -400), true);
+			door.haveKey = true;
+
+		}
+	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == DOOR) || (filterB.categoryBits == PLAYER && filterA.categoryBits == DOOR))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+			//cout << door.doorOpen;
+			if (door.haveKey) {
+				door.doorOpen = true;
+			}
+			if (door.doorTransport) {
+				player.SetPosition(b2Vec2(0, 350), true);
+			}
+
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+			//cout << door.doorOpen;
+
+			if (door.haveKey) {
+				door.doorOpen = true;
+			}
+			if (door.doorTransport) {
+				player.SetPosition(b2Vec2(0, 350), true);
+			}
+
 		}
 	}
 	

@@ -29,7 +29,9 @@ enum EntityCategories
 	PICKUP		= 0x0064,
 	TRIGGER		= 0x0128,
 	HEXAGON		= 0x0256,
-	WALL        = 0x0512
+	WALL        = 0x0512,
+	KEY			= 0x1024,
+	DOOR		= 0x2048
 };
 
 

@@ -145,6 +145,7 @@
     <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="CanJump.h" />
     <ClInclude Include="DestroyTrigger.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FirstCreation.h" />
@@ -164,7 +165,9 @@
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="JSON.h" />
+    <ClInclude Include="LadderTrigger.h" />
     <ClInclude Include="MainEntities.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="PhysicsBody.h" />
     <ClInclude Include="PhysicsPlayground.h" />
@@ -207,6 +210,7 @@
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="CanJump.cpp" />
     <ClCompile Include="DestroyTrigger.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FirstCreation.cpp" />
@@ -224,8 +228,10 @@
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JSON.cpp" />
+    <ClCompile Include="LadderTrigger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainEntities.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PhysicsPlayground.cpp" />

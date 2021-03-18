@@ -47,3 +47,25 @@ void ECS::SetIsMainPlayer(unsigned entity, bool mainPlayer)
 		MainEntities::MainPlayer(entity);
 	}
 }
+void ECS::SetIsDoorBasement(unsigned entity, bool door)
+{
+	if (door)
+	{
+		MainEntities::doorBasement(entity);
+	}
+}
+void ECS::SetIsKeyOne(unsigned entity, bool key)
+{
+	if (key)
+	{
+		MainEntities::keyOne(entity);
+	}
+}
+
+//void ECS::SetIsKeyTwo(unsigned entity, bool key)
+//{
+//	if (key)
+//	{
+//		MainEntities::keyTwo(entity);
+//	}
+//}
