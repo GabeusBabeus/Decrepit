@@ -13,6 +13,11 @@ public:
 	//*Unloads window
 	~Game();
 
+	//Changes the scene
+	//virtual void sceneNumber(int& x);
+
+
+
 	//Initiaiizes game
 	//*Seeds random
 	//*Initializes SDL
@@ -74,6 +79,9 @@ private:
 	Scene* m_activeScene = nullptr;
 	std::vector<Scene*> m_scenes;
 	
+	
+	
+
 	//Imgui stuff
 	bool m_guiActive = false;
 
@@ -85,6 +93,12 @@ private:
 
 	//Xbox Input
 	XInputManager input;
+
+
+protected:
+
+	//int index = 1;
+	
 };
 
 

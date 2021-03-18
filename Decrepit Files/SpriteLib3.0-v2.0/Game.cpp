@@ -26,6 +26,10 @@ Game::~Game()
 	}
 }
 
+//void Game::sceneNumber(int& x) {
+//	index = x;
+//};
+
 void Game::InitGame()
 {
 	//Initializes the backend with window width and height values
@@ -43,7 +47,7 @@ void Game::InitGame()
 	m_scenes.push_back(new AnimationSpritePlayground("Animation TIEM!!!!"));
 	 
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[2];
+	m_activeScene = m_scenes[1];
 
 	m_activeScene->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 
@@ -53,13 +57,17 @@ void Game::InitGame()
 	BackEnd::SetWindowName(m_activeScene->GetName());
 
 	PhysicsSystem::Init();
+
 }
 
 bool Game::Run()
 {
+	
 	//While window is still open
 	while (m_window->isOpen())
 	{
+		
+		
 		//Clear window with activescene clearColor
 		m_window->Clear(m_activeScene->GetClearColor());
 		//Updates the game
@@ -77,6 +85,19 @@ bool Game::Run()
 		//Polls events and then checks them
 		BackEnd::PollEvents(m_register, &m_close, &m_motion, &m_click, &m_wheel);
 		CheckEvents();
+
+		/*if (index == 2) {
+			
+
+			m_activeScene = m_scenes[index];
+			m_activeScene->Unload();
+
+			m_activeScene->InitScene(BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
+			m_register = m_activeScene->GetScene();
+			m_window->SetWindowName(m_activeScene->GetName());
+		}*/
+
+
 
 		//does the window have keyboard focus?
 		if (Input::m_windowFocus)

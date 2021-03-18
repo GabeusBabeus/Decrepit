@@ -1,2 +1,4 @@
-﻿  TowerGroundScene.cpp
-  SpriteLib3.0-v2.0.vcxproj -> C:\Users\Admin\Desktop\GameFolders\Decrepit-main\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
+﻿  ForestScene.cpp
+C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(775,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(779,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  SpriteLib3.0-v2.0.vcxproj -> C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
