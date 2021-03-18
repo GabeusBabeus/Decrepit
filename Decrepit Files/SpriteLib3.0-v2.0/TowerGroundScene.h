@@ -30,4 +30,7 @@ protected:
 	int doubleJump = 0;
 	int puzzleWall1;
 	int puzzleWall2;
+
+	
+
 };
