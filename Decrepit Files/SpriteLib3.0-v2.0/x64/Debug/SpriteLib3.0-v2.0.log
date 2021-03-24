@@ -1,21 +1,10 @@
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-﻿  MainMenu.cpp
+﻿  PhysicsPlaygroundListener.cpp
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(35,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(35,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(180,68): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(180,68): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(185,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(185,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(192,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(192,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
   SpriteLib3.0-v2.0.vcxproj -> C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
-=======
-=======
->>>>>>> main
->>>>>>> Stashed changes
-﻿  ForestScene.cpp
-C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(775,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(779,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SpriteLib3.0-v2.0.vcxproj -> C:\Users\gabem\Desktop\GDW GAME\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> main
-=======
->>>>>>> main
->>>>>>> Stashed changes
