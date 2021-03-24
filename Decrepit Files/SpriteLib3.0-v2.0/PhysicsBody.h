@@ -31,7 +31,8 @@ enum EntityCategories
 	HEXAGON		= 0x0256,
 	WALL        = 0x0512,
 	KEY			= 0x1024,
-	DOOR		= 0x2048
+	DOOR		= 0x2048,
+	LADDER		= 0x4096
 };
 
 

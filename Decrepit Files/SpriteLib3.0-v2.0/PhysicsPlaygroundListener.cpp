@@ -135,6 +135,21 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 
 		}
 	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+				player.SetPosition(b2Vec2(0, 350), true);
+			
+
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+				player.SetPosition(b2Vec2(0, 350), true);
+			
+
+		}
+	}
 	
 
 }
