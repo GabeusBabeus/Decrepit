@@ -1,2 +1,10 @@
-﻿  TowerGroundScene.cpp
-  SpriteLib3.0-v2.0.vcxproj -> C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
+﻿  PhysicsPlaygroundListener.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(35,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(35,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(262,68): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(262,68): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(267,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(267,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(274,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(274,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+  SpriteLib3.0-v2.0.vcxproj -> C:\Users\gabem\Desktop\Game\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
