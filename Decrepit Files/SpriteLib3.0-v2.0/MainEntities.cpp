@@ -8,6 +8,7 @@ int MainEntities::m_switchOne = 0;
 int MainEntities::m_switchTwo = 0;
 int MainEntities::m_bridgeOne = 0;
 int MainEntities::m_bridgeTwo = 0;
+int MainEntities::m_pointer = 0;
 //int MainEntities::m_keyTwo = 0;
 
 int MainEntities::MainCamera()
@@ -47,6 +48,11 @@ int MainEntities::switchOne()
 int MainEntities::switchTwo()
 {
 	return m_switchTwo;
+}
+
+int MainEntities::pointer()
+{
+	return m_pointer;
 }
 
 //int MainEntities::keyTwo()
@@ -92,6 +98,12 @@ void MainEntities::switchTwo(int main)
 {
 	m_switchTwo = main;
 }
+
+void MainEntities::pointer(int main)
+{
+	m_pointer = main;
+}
+
 
 //void MainEntities::keyTwo(int main)
 //{

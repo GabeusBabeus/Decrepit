@@ -61,6 +61,7 @@ public:
 	static void SetIsSwitchOne(unsigned entity, bool switchD);
 	static void SetIsSwitchTwo(unsigned entity, bool switchD);
 
+	static void SetIsPointer(unsigned entity, bool point);
 	//static void SetIsKeyTwo(unsigned entity, bool key);
 
 	static entt::registry* m_reg;

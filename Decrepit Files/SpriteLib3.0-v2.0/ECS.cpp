@@ -97,6 +97,14 @@ void ECS::SetIsSwitchTwo(unsigned entity, bool switchD)
 	}
 }
 
+void ECS::SetIsPointer(unsigned entity, bool point)
+{
+	if (point)
+	{
+		MainEntities::keyOne(entity);
+	}
+}
+
 //void ECS::SetIsKeyTwo(unsigned entity, bool key)
 //{
 //	if (key)

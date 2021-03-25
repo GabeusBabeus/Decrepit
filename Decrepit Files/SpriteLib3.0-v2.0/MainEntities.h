@@ -14,6 +14,7 @@ public:
 	static int switchOne();
 	static int switchTwo();
 
+	static int pointer();
 	//static int keyTwo();
 
 	//Setters
@@ -25,6 +26,7 @@ public:
 	static void keyOne(int main);
 	static void switchOne(int main);
 	static void switchTwo(int main);
+	static void pointer(int main);
 	//static void keyTwo(int main);
 private:
 	static int m_mainCamera;
@@ -35,6 +37,7 @@ private:
 	static int m_switchTwo;
 	static int m_bridgeOne;
 	static int m_bridgeTwo;
+	static int m_pointer;
 	//static int m_keyTwo;
 };
 

@@ -54,7 +54,59 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		
 
 	}
+	{
 
+		//Setup helloworld sign
+		{
+			auto entity = ECS::CreateEntity();
+
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+
+			std::string fileName = "Tower Inside/Base/Menu/Title_Image.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 290, 185);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(400.f, 0.f, -1.f));
+		}
+		//Setup helloworld sign
+		{
+			auto entity = ECS::CreateEntity();
+
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+
+			std::string fileName = "Tower Inside/Base/Menu/NewGameButtonEng.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 11);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(400.f, -45.f, 0.f));
+		}
+		//Setup helloworld sign
+		{
+			auto entity = ECS::CreateEntity();
+
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+
+			std::string fileName = "Tower Inside/Base/Menu/ExitButtonEng.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 11);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(400.f, -45.f, 0.f));
+		}
+		//Pointer
+		{
+			auto entity = ECS::CreateEntity();
+			ECS::SetIsPointer(entity, true);
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+
+			std::string fileName = "Tower Inside/Base/Menu/TitleArrow.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 22);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, -45.f, 0.f));
+		}
+
+
+	}
 	//Setup new Entity
 	{
 		/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
@@ -96,6 +148,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 	//Link entity
 	{
 		/*Scene::CreatePhysicsSprite(m_sceneReg, "LinkStandby", 80, 60, 1.f, vec3(0.f, 30.f, 2.f), b2_dynamicBody, 0.f, 0.f, true, true)*/
+		auto idle = File::LoadJSON("idle.json");
 
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainPlayer(entity, true);
@@ -105,12 +158,19 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 		ECS::AttachComponent<CanJump>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
 		//Sets up the components
-		std::string fileName = "Character.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 25);
+		std::string fileName = "spritesheets/PlayerIdle.png";
+		
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 4.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 8.f));
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(idle["idle"]);
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 25, true, &animController);
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -125,17 +185,14 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		//tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, PLAYER, ENEMY | OBJECTS | PICKUP | TRIGGER, 0.5f, 3.f);
 		tempPhsBody = PhysicsBody(entity, tempBody, float((tempSpr.GetHeight() - shrinkY) / 2.f), vec2(0.f, 0.f), false, PLAYER, ENVIRONMENT | ENEMY | OBJECTS | TRIGGER | HEXAGON, 1.f, 4.5f);
-		//std::vector<b2Vec2> points = {b2Vec2(-tempSpr.GetWidth()/2.f, -tempSpr.GetHeight()/2.f), b2Vec2(tempSpr.GetWidth()/2.f, -tempSpr.GetHeight()/2.f), b2Vec2(0.f, tempSpr.GetHeight()/2.f)};
-		//tempPhsBody = PhysicsBody(entity, BodyType::TRIANGLE, tempBody, points, vec2(0.f, 0.f), false, PLAYER, ENEMY | OBJECTS | PICKUP | TRIGGER, 0.5f, 3.f);
 
 		tempPhsBody.SetRotationAngleDeg(0.f);
 		tempPhsBody.SetFixedRotation(true);
 		tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
 		tempPhsBody.SetGravityScale(1.f);
 	}
-
+	
 	{
 		//PreSpawn Fog
 		{
@@ -154,14 +211,14 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			std::string fileName = "ForestTiles/Fog_Tile.png";
 			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64000, 64000);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(.25f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-96.f, -100.f, 6.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-96.f, -100.f, 20.f));
 
 		}
 
 		{
 
-			
-			
+
+
 			for (int i = 0; i < 4; i++) {
 
 				int increment = 192;
@@ -187,8 +244,8 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					float shrinkY = 0.f;
 					b2Body* tempBody;
 					b2BodyDef tempDef;
-					tempDef.type = b2_staticBody; 
-					tempDef.position.Set(float32(-164.f), float32(-15.f + (increment*i)));
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(-164.f), float32(-15.f + (increment * i)));
 
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -273,7 +330,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-						float(tempSpr.GetHeight() - shrinkY), vec2(0.f,12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
 					tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 
 				}
@@ -329,7 +386,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 					tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
-						float(physBodyY/2), vec2(0.f,16.f), false, GROUND, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS | HEXAGON);
 					tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
 
 				}
@@ -348,7 +405,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 					float shrinkX = 0.f;
-					float shrinkY = (posY/2.f)+20;
+					float shrinkY = (posY / 2.f) + 20;
 					b2Body* tempBody;
 					b2BodyDef tempDef;
 					tempDef.type = b2_staticBody;
@@ -357,12 +414,44 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 					tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
-						float(physBodyY/2), vec2(0.f, 8.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						float(physBodyY / 2), vec2(0.f, 8.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS | HEXAGON);
 					tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
 
 				}
 			}
-			
+			//WALL OVER SPIKE
+			{
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+
+				//Sets up components
+				std::string fileName = "Tower Inside/Base/Filling/Central 1.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 128);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
+
+				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				float shrinkX = 0.f;
+				float shrinkY = 0.f;
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(268), float32(0));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+			}
+		
 			//PLATFORM 2 GROUP
 			{
 			float physBodyX = 140.f;
@@ -838,7 +927,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				b2Body* tempBody;
 				b2BodyDef tempDef;
 				tempDef.type = b2_staticBody;
-				tempDef.position.Set(float32(565.f), float32(185.f));
+				tempDef.position.Set(float32(565.f), float32(165.f));
 
 				tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -865,13 +954,12 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				b2Body* tempBody;
 				b2BodyDef tempDef;
 				tempDef.type = b2_staticBody;
-				tempDef.position.Set(float32(565.f), float32(250.f));
+				tempDef.position.Set(float32(565.f), float32(240.f));
 
 				tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-				tempPhsBody = PhysicsBody(entity, tempBody, float(0),
-					float(0), vec2(0.f, 0.f), true, LADDER, PLAYER | OBJECTS);
-				tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+				tempPhsBody = PhysicsBody(entity, tempBody, float(0),float(0), vec2(0.f, 0.f), false, LADDER, PLAYER | OBJECTS);
+				tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
 
 			}
 			
@@ -889,7 +977,39 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					ECS::AttachComponent<Door>(entity);
 
 					//Sets up components
-					std::string fileName = "Tower Inside/Base/Entrance TEMP.png";
+					std::string fileName = "Tower Inside/Base/DoorClosed.png";
+					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 6.f));
+
+					auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+					float shrinkX = 0.f;
+					float shrinkY = 0.f;
+					b2Body* tempBody;
+					b2BodyDef tempDef;
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(540.f), float32(-44.f));
+
+					tempBody = m_physicsWorld->CreateBody(&tempDef);
+					
+					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, DOOR, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+				}
+				{
+
+					//Creates entity
+					auto entity = ECS::CreateEntity();
+					//Add components
+					ECS::AttachComponent<Sprite>(entity);
+					ECS::AttachComponent<Transform>(entity);
+					ECS::AttachComponent<PhysicsBody>(entity);
+					ECS::AttachComponent<Door>(entity);
+
+					//Sets up components
+					std::string fileName = "Tower Inside/Base/Ground Floor Center TH.png";
 					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
 					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 5.f));
 
@@ -904,7 +1024,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					tempDef.position.Set(float32(576.f), float32(-56.f));
 
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
-					
+
 					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
 						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, DOOR, PLAYER | ENEMY | OBJECTS | HEXAGON);
 					tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
@@ -1121,7 +1241,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			}
 			//SPIKE ON Ground
 
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 7; i++) {
 				{
 
 					//Creates entity
@@ -1145,7 +1265,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 					b2Body* tempBody;
 					b2BodyDef tempDef;
 					tempDef.type = b2_staticBody;
-					tempDef.position.Set(float32(264.f+(32*i)), float32(-90.f));
+					tempDef.position.Set(float32(168.f+(32*i)), float32(-90.f));
 
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -1191,9 +1311,9 @@ void TowerGroundScene::Update()
 			ECS::AttachComponent<Door>(entity);
 
 			//Sets up components
-			std::string fileName = "Tower Inside/Base/Entrance TEMP.png";
+			std::string fileName = "Tower Inside/Base/DoorOpen.png";
 			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 7.f));
 
 			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);

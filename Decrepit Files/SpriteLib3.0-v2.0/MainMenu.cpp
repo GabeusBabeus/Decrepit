@@ -84,17 +84,7 @@ void MainMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, -45.f, 0.f)); 
 	}
-	//star animation
-	{
-		auto entity = ECS::CreateEntity();
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-
-		std::string fileName = "Tower Inside/Base/Filling/Blinding_Light.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32);
-		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(50.f, 0.f, 0.f));
-	}
+	
 
 	
 

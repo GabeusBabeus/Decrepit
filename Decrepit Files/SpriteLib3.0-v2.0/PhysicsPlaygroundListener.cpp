@@ -165,7 +165,18 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 
 		}
 	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+				player.SetPosition(b2Vec2(0, 400), true);
+			
 
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+				player.SetPosition(b2Vec2(0, 400), true);
+			
 	//if ((filterA.categoryBits == PLAYER && filterB.categoryBits == KEY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == KEY))
 	//{
 	//	if (filterA.categoryBits == PLAYER)
