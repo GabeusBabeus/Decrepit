@@ -54,11 +54,46 @@ void ECS::SetIsDoorBasement(unsigned entity, bool door)
 		MainEntities::doorBasement(entity);
 	}
 }
+
+void ECS::SetIsBridgeOne(unsigned entity, bool bridge)
+{
+	if (bridge)
+	{
+		MainEntities::bridgeOne(entity);
+	}
+}
+
+
+void ECS::SetIsBridgeTwo(unsigned entity, bool bridge)
+{
+	if (bridge)
+	{
+		MainEntities::bridgeTwo(entity);
+	}
+}
+
 void ECS::SetIsKeyOne(unsigned entity, bool key)
 {
 	if (key)
 	{
 		MainEntities::keyOne(entity);
+	}
+}
+
+void ECS::SetIsSwitchOne(unsigned entity, bool switchD) 
+{
+	if (switchD)
+	{
+		MainEntities::switchOne(entity);
+	}
+}
+
+
+void ECS::SetIsSwitchTwo(unsigned entity, bool switchD)
+{
+	if (switchD)
+	{
+		MainEntities::switchTwo(entity);
 	}
 }
 

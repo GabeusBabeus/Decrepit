@@ -22,17 +22,20 @@ enum EntityCategories
 {
 	ENVIRONMENT = 0x0001,
 	GROUND		= 0x0002,
+	HEXAGON		= 0x0003,
 	OBJECTS		= 0x0004,
 	PLAYER		= 0x0008,
 	FRIENDLY	= 0x0016,
 	ENEMY		= 0x0032,
 	PICKUP		= 0x0064,
 	TRIGGER		= 0x0128,
-	HEXAGON		= 0x0256,
-	WALL        = 0x0512,
-	KEY			= 0x1024,
-	DOOR		= 0x2048,
-	LADDER		= 0x4096
+	WALL        = 0x0256,
+	KEY			= 0x0512,
+	DOOR		= 0x1024,
+	LADDER		= 0x2048,
+	SWITCH      = 0x4096,
+	BRIDGE		= 0x8192,
+	
 };
 
 

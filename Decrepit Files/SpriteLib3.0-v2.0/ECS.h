@@ -15,6 +15,7 @@
 #include "HorizontalScroll.h"
 #include "CanJump.h"
 #include "Door.h"
+#include "Bridge.h"
 
 
 class ECS abstract
@@ -54,7 +55,12 @@ public:
 	static void SetIsMainCamera(unsigned entity, bool mainCamera);
 	static void SetIsMainPlayer(unsigned entity, bool mainPlayer);
 	static void SetIsDoorBasement(unsigned entity, bool door);
+	static void SetIsBridgeOne(unsigned entity, bool bridge);
+	static void SetIsBridgeTwo(unsigned entity, bool bridge);
 	static void SetIsKeyOne(unsigned entity, bool key);
+	static void SetIsSwitchOne(unsigned entity, bool switchD);
+	static void SetIsSwitchTwo(unsigned entity, bool switchD);
+
 	//static void SetIsKeyTwo(unsigned entity, bool key);
 
 	static entt::registry* m_reg;
