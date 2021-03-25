@@ -55,6 +55,7 @@ public:
 	static void SetIsMainPlayer(unsigned entity, bool mainPlayer);
 	static void SetIsDoorBasement(unsigned entity, bool door);
 	static void SetIsKeyOne(unsigned entity, bool key);
+	static void SetIsPointer(unsigned entity, bool point);
 	//static void SetIsKeyTwo(unsigned entity, bool key);
 
 	static entt::registry* m_reg;

@@ -62,6 +62,14 @@ void ECS::SetIsKeyOne(unsigned entity, bool key)
 	}
 }
 
+void ECS::SetIsPointer(unsigned entity, bool point)
+{
+	if (point)
+	{
+		MainEntities::keyOne(entity);
+	}
+}
+
 //void ECS::SetIsKeyTwo(unsigned entity, bool key)
 //{
 //	if (key)

@@ -139,13 +139,13 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 	{
 		if (filterA.categoryBits == PLAYER)
 		{
-				player.SetPosition(b2Vec2(0, 350), true);
+				player.SetPosition(b2Vec2(0, 400), true);
 			
 
 		}
 		else if (filterB.categoryBits == PLAYER)
 		{
-				player.SetPosition(b2Vec2(0, 350), true);
+				player.SetPosition(b2Vec2(0, 400), true);
 			
 
 		}
