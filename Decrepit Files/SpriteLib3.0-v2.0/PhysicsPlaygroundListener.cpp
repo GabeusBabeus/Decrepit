@@ -9,6 +9,7 @@ PhysicsPlaygroundListener::PhysicsPlaygroundListener()
 
 }
 
+
 void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 {
 	b2Fixture* fixtureA = contact->GetFixtureA();

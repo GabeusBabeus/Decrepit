@@ -97,13 +97,15 @@ void ECS::SetIsSwitchTwo(unsigned entity, bool switchD)
 	}
 }
 
-void ECS::SetIsPointer(unsigned entity, bool point)
+void ECS::SetMainMenu(unsigned entity, bool menu)
 {
-	if (point)
+	if (menu)
 	{
-		MainEntities::keyOne(entity);
+		MainEntities::MainMenu(entity);
 	}
 }
+
+
 
 //void ECS::SetIsKeyTwo(unsigned entity, bool key)
 //{

@@ -75,13 +75,7 @@ private:
 	//The main register for our ECS
 	entt::registry* m_register = nullptr;
 
-	//Scenes
-	Scene* m_activeScene = nullptr;
-	std::vector<Scene*> m_scenes;
 	
-	
-	
-
 	//Imgui stuff
 	bool m_guiActive = false;
 
@@ -94,9 +88,11 @@ private:
 	//Xbox Input
 	XInputManager input;
 
-
+	Scene* m_activeScene = nullptr;
+	std::vector<Scene*> m_scenes;
 protected:
-
+	//Scenes
+	
 	//int index = 1;
 	
 };

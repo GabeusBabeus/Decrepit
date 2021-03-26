@@ -13,9 +13,7 @@ public:
 	static int keyOne();
 	static int switchOne();
 	static int switchTwo();
-
-	static int pointer();
-	//static int keyTwo();
+	static int MainMenu();
 
 	//Setters
 	static void MainCamera(int main);
@@ -26,8 +24,7 @@ public:
 	static void keyOne(int main);
 	static void switchOne(int main);
 	static void switchTwo(int main);
-	static void pointer(int main);
-	//static void keyTwo(int main);
+	static void MainMenu(int main);
 private:
 	static int m_mainCamera;
 	static int m_mainPlayer;
@@ -37,8 +34,7 @@ private:
 	static int m_switchTwo;
 	static int m_bridgeOne;
 	static int m_bridgeTwo;
-	static int m_pointer;
-	//static int m_keyTwo;
+	static int m_MainMenu;
 };
 
 #endif // !__MAINENTITIES_H__

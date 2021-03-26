@@ -80,9 +80,11 @@ protected:
 
 	entt::registry* m_sceneReg = nullptr;	
 	std::string m_name = "Default Name";
+	//static int startingScene;
 private:
 	//Hello world entity number
 	int m_helloWorldSign = 0;
+	
 };
 
 #endif // !__SCENE_H__

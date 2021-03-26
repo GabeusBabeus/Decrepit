@@ -36,7 +36,7 @@ void MainMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<VerticalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 	}
 
-	//Setup helloworld sign
+	//main menu title image
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -48,7 +48,7 @@ void MainMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -1.f));
 	}
-	//Setup helloworld sign
+	//MainMenu New game
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -60,7 +60,7 @@ void MainMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-40.f, -45.f, 0.f));
 	}
-	//Setup helloworld sign
+	//Main menu exit
 	{
 		auto entity = ECS::CreateEntity();
 

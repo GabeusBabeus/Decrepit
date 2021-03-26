@@ -54,9 +54,24 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		
 
 	}
+	//MAIN MENU
 	{
+		float transX = -1000.f;
+		float transY = 0.f;
+		//Main menu anchor
+		{
+			auto entity = ECS::CreateEntity();
+			ECS::SetMainMenu(entity, true);
 
-		//Setup helloworld sign
+			//ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+
+			//std::string fileName = "Tower Inside/Base/Menu/Title_Image.png";
+			//ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 400, 274);
+			//ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + transX, 0.f + transY, -1.f));
+		}
+		//main menu title image
 		{
 			auto entity = ECS::CreateEntity();
 
@@ -64,11 +79,12 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			ECS::AttachComponent<Transform>(entity);
 
 			std::string fileName = "Tower Inside/Base/Menu/Title_Image.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 290, 185);
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 475, 274);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(400.f, 0.f, -1.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(95.f + transX, 50.f + transY, -1.f));
 		}
-		//Setup helloworld sign
+		
+		//MainMenu New game
 		{
 			auto entity = ECS::CreateEntity();
 
@@ -76,11 +92,11 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			ECS::AttachComponent<Transform>(entity);
 
 			std::string fileName = "Tower Inside/Base/Menu/NewGameButtonEng.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 11);
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 22);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(400.f, -45.f, 0.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(40.f + transX, -15.f + transY, 0.f));
 		}
-		//Setup helloworld sign
+		//Main menu exit
 		{
 			auto entity = ECS::CreateEntity();
 
@@ -88,25 +104,26 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			ECS::AttachComponent<Transform>(entity);
 
 			std::string fileName = "Tower Inside/Base/Menu/ExitButtonEng.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 11);
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 22);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(400.f, -45.f, 0.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(160.f+ transX, -15.f + transY, 0.f));
 		}
 		//Pointer
 		{
 			auto entity = ECS::CreateEntity();
-			ECS::SetIsPointer(entity, true);
+			m_pointer = entity;
 			ECS::AttachComponent<Sprite>(entity);
 			ECS::AttachComponent<Transform>(entity);
 
 			std::string fileName = "Tower Inside/Base/Menu/TitleArrow.png";
 			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 22);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, -45.f, 0.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-10.f+ transX, -15.f + transY, 0.f));
 		}
 
 
 	}
+	
 	//Setup new Entity
 	{
 		/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
@@ -1294,48 +1311,58 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 void TowerGroundScene::Update()
 {
-	auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
-	auto& removeDoor = ECS::GetComponent<PhysicsBody>(MainEntities::doorBasement());
-	//DOOR TO BASEMENT OPEN
-	if (door.doorOpen) {
-		
-		{
+	if (levelMain) {
+		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainMenu()));
+		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainMenu()));
+	}
 
-			//Creates entity
-			auto entity = ECS::CreateEntity();
-			ECS::SetIsDoorBasement(entity, true);
-			//Add components
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<PhysicsBody>(entity);
-			ECS::AttachComponent<Door>(entity);
 
-			//Sets up components
-			std::string fileName = "Tower Inside/Base/DoorOpen.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 7.f));
-
-			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-			float shrinkX = 40.f;
-			float shrinkY = 40.f;
-			b2Body* tempBody;
-			b2BodyDef tempDef;
-			tempDef.type = b2_staticBody;
-			tempDef.position.Set(float32(removeDoor.GetPosition().x), float32(removeDoor.GetPosition().y));
-
-			tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-				float(tempSpr.GetHeight() - shrinkY), vec2(20.f, 0.f), false, DOOR, PLAYER | ENEMY | OBJECTS | HEXAGON);
-			tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
-
-		}
-		removeDoor.SetPosition(b2Vec2(-100, -400), true);
+	if (levelOne) {
+		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
+		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 		auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
-		door.doorOpen = false;
-		door.doorTransport = true;
+		auto& removeDoor = ECS::GetComponent<PhysicsBody>(MainEntities::doorBasement());
+		//DOOR TO BASEMENT OPEN
+		if (door.doorOpen) {
+
+			{
+
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+				ECS::SetIsDoorBasement(entity, true);
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+				ECS::AttachComponent<Door>(entity);
+
+				//Sets up components
+				std::string fileName = "Tower Inside/Base/DoorOpen.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 7.f));
+
+				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				float shrinkX = 40.f;
+				float shrinkY = 40.f;
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(removeDoor.GetPosition().x), float32(removeDoor.GetPosition().y));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+					float(tempSpr.GetHeight() - shrinkY), vec2(20.f, 0.f), false, DOOR, PLAYER | ENEMY | OBJECTS | HEXAGON);
+				tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
+
+			}
+			removeDoor.SetPosition(b2Vec2(-100, -400), true);
+			auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
+			door.doorOpen = false;
+			door.doorTransport = true;
+		}
 	}
 	
 }
@@ -1348,14 +1375,33 @@ void TowerGroundScene::KeyboardHold()
 	float speed = 3.f;
 	b2Vec2 vel = b2Vec2(0.f, 0.f);
 
-	
-	if (Input::GetKey(Key::A))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(-200000.f * speed, 0.f), true);
+	if (levelOne) {
+		if (Input::GetKey(Key::A))
+		{
+			player.GetBody()->ApplyForceToCenter(b2Vec2(-200000.f * speed, 0.f), true);
+		}
+		if (Input::GetKey(Key::D))
+		{
+			player.GetBody()->ApplyForceToCenter(b2Vec2(200000.f * speed, 0.f), true);
+		}
 	}
-	if (Input::GetKey(Key::D))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(200000.f * speed, 0.f), true);
+	if (levelMain) {
+		auto& pointer = ECS::GetComponent<Transform>(m_pointer);
+		
+		if (pos == 0) {
+			if (Input::GetKeyDown(Key::D)) {
+				pointer.SetPosition(vec3(pointer.GetPositionX() + 130.f, -15, 0.f));
+				pos = 1;
+
+			}
+		}
+		if (pos == 1) {
+			if (Input::GetKeyDown(Key::A)) {
+				pointer.SetPosition(vec3(pointer.GetPositionX() - 130.f, -15.f, 0.f));
+				pos = 0;
+			}
+		}
+
 	}
 	if (ladder.enableLadder) {
 		if (Input::GetKey(Key::W)) {
@@ -1378,47 +1424,55 @@ void TowerGroundScene::KeyboardDown()
 	{
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
 	}
-	if (canJump.m_canJump)
-	{
-		if (Input::GetKeyDown(Key::Space))
-		{
-			
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 200000.f), true);
-			canJump.m_canJump = false;
-			
-
+	if (levelMain) {
+		if (Input::GetKeyDown(Key::Enter)) {
+			if (pos == 0) {
+				levelMain = false;
+				levelOne = true;
+			}
+			else if (pos == 1) {
+				exit(1);
+			}
 		}
 	}
-
-	if (Input::GetKeyDown(Key::M)) {
-		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
-		player.SetVelocity(vec3(0, 0, 0));
-		player.SetPosition(b2Vec2(-100, -40), true);
-		//player.SetPosition(b2Vec2(565, 200), true);
-		player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
-	}
-	if (canJump.m_wallJump) {
-		if (Input::GetKeyDown(Key::Space))
+	if (levelOne) {
+		if (canJump.m_canJump)
 		{
-			if (canJump.m_facingRight) {
-				player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(150000.f, 250000.f), true);
-				canJump.m_wallJump = false;
-			}
-			else {
-				player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(-150000.f, 250000.f), true);
-				canJump.m_wallJump = false;
-			}
+			if (Input::GetKeyDown(Key::Space))
+			{
+
+				player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 200000.f), true);
+				canJump.m_canJump = false;
 
 
-			
-			
+			}
+		}
+
+		if (Input::GetKeyDown(Key::M)) {
+			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
+			player.SetVelocity(vec3(0, 0, 0));
+			player.SetPosition(b2Vec2(-100, -40), true);
+			//player.SetPosition(b2Vec2(565, 200), true);
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+		}
+		if (canJump.m_wallJump) {
+			if (Input::GetKeyDown(Key::Space))
+			{
+				if (canJump.m_facingRight) {
+					player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(150000.f, 250000.f), true);
+					canJump.m_wallJump = false;
+				}
+				else {
+					player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(-150000.f, 250000.f), true);
+					canJump.m_wallJump = false;
+				}
+			}
 		}
 	}
 }
 
 void TowerGroundScene::KeyboardUp()
 {
-	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 
 	
 

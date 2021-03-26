@@ -30,6 +30,11 @@ protected:
 	int doubleJump = 0;
 	int puzzleWall1;
 	int puzzleWall2;
+	int m_pointer = 0;
+	bool levelMain = true;
+	bool levelOne = false;
+	bool levelTwo = false;
+	int pos = 0;
 
 	
 
