@@ -20,6 +20,271 @@ ForestScene::ForestScene(std::string name)
 
 }
 
+void ForestScene::spawnLeftWall() {
+	{
+		int wallMove = 0;
+
+		for (int i = 0; i <= 2; i++)
+		{
+			{
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+
+				//Sets up components
+				std::string fileName = "ForestTiles/Dirt/Wall_L.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 128, 256);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 8.f));
+
+				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				float shrinkX = 0.f;
+				float shrinkY = 0.f;
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(-252.f), float32(256.f - wallMove));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS);
+				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+
+			}
+
+
+
+			{
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+
+				//Sets up components
+				std::string fileName = "ForestTiles/Dirt/Wall_R.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 128, 256);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 8.f));
+
+				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				float shrinkX = 0.f;
+				float shrinkY = 0.f;
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(-126.f), float32(256.f - wallMove));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS);
+				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+
+
+			}
+
+			wallMove = wallMove + 256;
+		}
+	}
+}
+
+void ForestScene::spawnGround() 
+{
+	{
+		//Creates entity
+		auto entity = ECS::CreateEntity();
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		//Sets up components
+		std::string fileName = "ForestTiles/Dirt/BASE.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 2880, 192);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 3.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = 0.f;
+		float shrinkY = 0.f;
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(720.f), float32(-360.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+			float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS);
+		tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+	}
+}
+
+
+void ForestScene::spawnGenericGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox) {
+	int xposGround = xGround;
+	int yposGround = yGround;
+	int xposGrass = xGrass;
+	int yposGrass = yGrass;
+	int xposGroundBox = xGroundBox;
+	int yposGroundBox = yGroundBox;
+
+
+	//Setup First Platform
+	{
+		int fillDirt = 0;
+		int fillGrass = 0;
+
+
+		for (int i = 0; i <= 2; i++) {
+
+			{
+				//Setup new Entity
+
+				/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+
+				//Set up the components
+				std::string fileName = "ForestTiles/Grass/Background_Grass.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 32);
+				ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(xposGrass + fillGrass, yposGrass, 2.f));
+
+			}
+
+
+			{
+				//Setup new Entity
+
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+
+				//Set up the components
+				std::string fileName = "ForestTiles/Grass/Foreground_Grass.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 32);
+				ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(xposGrass + fillGrass, yposGrass - 4.f, 5.f));
+
+			}
+
+			fillGrass = fillGrass + 64;
+		}
+
+
+		for (int i = 0; i <= 3; i++) {
+
+			
+
+
+			{
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+
+				//Sets up components
+				std::string fileName = "ForestTiles/Dirt/TopL&R&C.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 192, 64);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 3.f));
+
+				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				float shrinkX = 0.f;
+				float shrinkY = 0.f;
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(xposGround), float32(yposGround - fillDirt));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, WALL, PLAYER | ENEMY | OBJECTS);
+				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+				//Filling in the terrain without multiple scopes
+
+			}
+
+			fillDirt = fillDirt + 64;
+			
+		}
+
+		float physBodyX = 192.f;
+		float physBodyY = 24.f;
+
+		{
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+
+			//Add components
+			ECS::AttachComponent<Transform>(entity);
+			ECS::AttachComponent<PhysicsBody>(entity);
+
+			//Sets up components
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 4.f));
+			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+			float shrinkX = 0.f;
+			float shrinkY = 0.f;
+			b2Body* tempBody;
+			b2BodyDef tempDef;
+			tempDef.type = b2_staticBody;
+			tempDef.position.Set(float32(xposGroundBox), float32(yposGroundBox));
+
+			tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+			tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+				float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS);
+			tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
+
+		}
+
+	}
+
+}
+
+void ForestScene::twoWideGround() {
+
+}
+
+void ForestScene::spawnConnectorGround() {
+
+}
+
+void ForestScene::floatingGround() {
+
+}
+
 
 
 void ForestScene::InitScene(float windowWidth, float windowHeight)
@@ -33,7 +298,22 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 	//Sets up aspect ratio for the camera
 	float aspectRatio = windowWidth / windowHeight;
 
+	{
+		ForestScene::spawnLeftWall();
 
+		//Underground 
+		ForestScene::spawnGround();
+
+		//Platform One
+		ForestScene::spawnGenericGround(0.f, -64.f, -64.f, -20.f, 0.f, -52.f);
+
+		//Platform Two
+		ForestScene::spawnGenericGround(320.f, -64.f, 256.f, -20.f, 320.f, -52.f);
+
+		//Platform after bridge
+		ForestScene::spawnGenericGround(768.f, -64.f, 704.f, -20.f, 768.f, -52.f);
+	}
+	
 
 	//Setup MainCamera Entity
 	{
@@ -71,9 +351,9 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 		//Set up the components
 		std::string fileName = "ForestTiles/Background.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 1754,1204);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 3400,2000);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 50.f, 1.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 100.f, 1.f));
 	}
 
 	//Setup new Entity
@@ -94,6 +374,29 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 100.f, 0.f));
 	}
 
+	{
+		//PreSpawn Fog
+		{
+			//Setup new Entity
+
+			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+
+			//Add components
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+
+			//Set up the components
+			std::string fileName = "ForestTiles/Fog_Tile.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64000, 64000);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(.1f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-96.f, -100.f, 20.f));
+
+		}
+
+	}
 	
 
 	//Character entity
@@ -141,360 +444,36 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetGravityScale(1.f);
 	}
 
-	{
-		//PreSpawn Fog
-		{
-			//Setup new Entity
+	
 
-			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
 
-			//Creates entity
-			auto entity = ECS::CreateEntity();
+	
 
-			//Add components
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
 
-			//Set up the components
-			std::string fileName = "ForestTiles/Fog_Tile.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64000, 64000);
-			ECS::GetComponent<Sprite>(entity).SetTransparency(.1f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-96.f, -100.f, 6.f));
-
-		}
-
-	}
-
-
-	//Setup First Platform
-	{
-		int fillDirt = 0;
-		int fillGrass = 0;
-
-		
-
-		for (int i = 0; i < 4; i++) {
-
-			{
-				//Setup new Entity
-
-				/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
-
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-
-				//Set up the components
-				std::string fileName = "ForestTiles/Grass_Tile_Back.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-				ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(-96.f + fillGrass, -70.f, 2.f));
-
-			}
-
-			
-			{
-				//Setup new Entity
-
-				/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
-
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-
-				//Set up the components
-				std::string fileName = "ForestTiles/Grass_Tile1_.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-				ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(-96.f + fillGrass, -60.f, 5.f));
-
-			}
-
-
-			{
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-				ECS::AttachComponent<PhysicsBody>(entity);
-
-				//Sets up components
-				std::string fileName = "ForestTiles/Dirt_Tile1.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 256, 32);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
-
-				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-				float shrinkX = 0.f;
-				float shrinkY = 0.f;
-				b2Body* tempBody;
-				b2BodyDef tempDef;
-				tempDef.type = b2_staticBody;
-				tempDef.position.Set(float32(0.f), float32(-70.f - fillDirt));
-
-				tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, WALL, PLAYER | ENEMY | OBJECTS);
-				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-				
-				//Filling in the terrain without multiple scopes
-				
-			}
-
-			fillDirt = fillDirt + 32;
-			fillGrass = fillGrass + 64;
-		}
-
-		float physBodyX = 254.f;
-		float physBodyY = 25.f;
-
-		{
-			//Creates entity
-			auto entity = ECS::CreateEntity();
-
-			//Add components
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<PhysicsBody>(entity);
-
-			//Sets up components
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
-			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-			float shrinkX = 0.f;
-			float shrinkY = 0.f;
-			b2Body* tempBody;
-			b2BodyDef tempDef;
-			tempDef.type = b2_staticBody;
-			tempDef.position.Set(float32(0.f), float32(-76.f));
-
-			tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-			tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
-				float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS);
-			tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
-
-		}
-
-	}
-
-
-
-	//Setup First Hole
-	{
-
-		int fillDirt = 0;
-
-		for (int i = 0; i < 2; i++) 
-		{
-
-			{
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-				ECS::AttachComponent<PhysicsBody>(entity);
-
-				//Sets up components
-				std::string fileName = "ForestTiles/Dirt_Tile1.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 52, 40);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
-
-				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-				float shrinkX = 0.f;
-				float shrinkY = 0.f;
-				b2Body* tempBody;
-				b2BodyDef tempDef;
-				tempDef.type = b2_staticBody;
-				tempDef.position.Set(float32(152.f), float32(-122.f - fillDirt));
-
-				tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, GROUND, PLAYER | ENEMY | OBJECTS);
-				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-			}
-
-			fillDirt = fillDirt + 40;
-		}
-
-
-		{
-			//Setup new Entity
-
-			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
-
-			//Creates entity
-			auto entity = ECS::CreateEntity();
-
-			//Add components
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-
-			//Set up the components
-			std::string fileName = "ForestTiles/Grass_Tile1_.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 40);
-			ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(152.f, -100.f, 2.f));
-
-		}
-
-	}
-
-
-
-	//Setup Second Platform
-	{
-		int fillDirt = 0;
-		int fillGrass = 0;
-
-		for (int i = 0; i < 4; i++) {
-
-			{
-				//Setup new Entity
-
-				/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
-
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-
-				//Set up the components
-				std::string fileName = "ForestTiles/Grass_Tile_Back.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-				ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(210.f + fillGrass, -70.f, 2.f));
-
-			}
-
-			{
-				//Setup new Entity
-
-				/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
-
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-
-				//Set up the components
-				std::string fileName = "ForestTiles/Grass_Tile1_.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-				ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(210.f + fillGrass, -60.f, 5.f));
-
-			}
-
-			
-
-
-			{
-				//Creates entity
-				auto entity = ECS::CreateEntity();
-
-				//Add components
-				ECS::AttachComponent<Sprite>(entity);
-				ECS::AttachComponent<Transform>(entity);
-				ECS::AttachComponent<PhysicsBody>(entity);
-
-				//Sets up components
-				std::string fileName = "ForestTiles/Dirt_Tile1.png";
-				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 256, 32);
-				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
-
-				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-				float shrinkX = 0.f;
-				float shrinkY = 0.f;
-				b2Body* tempBody;
-				b2BodyDef tempDef;
-				tempDef.type = b2_staticBody;
-				tempDef.position.Set(float32(306.f), float32(-70.f - fillDirt));
-
-				tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, WALL , PLAYER | ENEMY | OBJECTS);
-				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-
-				//Filling in the terrain without multiple scopes
-
-			}
-
-			fillDirt = fillDirt + 32;
-			fillGrass = fillGrass + 64;
-		}
-
-		float physBodyX = 254.f;
-		float physBodyY = 25.f;
-
-		{
-			//Creates entity
-			auto entity = ECS::CreateEntity();
-
-			//Add components
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<PhysicsBody>(entity);
-
-			//Sets up components
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
-			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-			float shrinkX = 0.f;
-			float shrinkY = 0.f;
-			b2Body* tempBody;
-			b2BodyDef tempDef;
-			tempDef.type = b2_staticBody;
-			tempDef.position.Set(float32(306.f), float32(-76.f));
-
-			tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-			tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
-				float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS);
-			tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
-
-		}
-
-	}
-
+	
+	
 	//Switch One
 	{
 		{
 			//Creates entity
 			auto entity = ECS::CreateEntity();
 			ECS::SetIsSwitchOne(entity, true);
-
+			switchOne = entity;
 			
 
 			//Add components
 			ECS::AttachComponent<Sprite>(entity);
 			ECS::AttachComponent<Transform>(entity);
 			ECS::AttachComponent<PhysicsBody>(entity);
-			
+			ECS::AttachComponent<Trigger*>(entity);
 
 			//Sets up components
-			std::string fileName = "ForestTiles/Switch_Off.png";
+			std::string fileName = "ForestTiles/Interactables/Switch_Off.png";
 			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 3.f));
+			ECS::GetComponent<Trigger*>(entity) = new DestroyTrigger();
+			ECS::GetComponent<Trigger*>(entity)->SetTriggerEntity(switchOne);
+			ECS::GetComponent<Trigger*>(entity)->AddTargetEntity(bridge);
 			
 
 			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -506,246 +485,57 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 			b2Body* tempBody;
 			b2BodyDef tempDef;
 			tempDef.type = b2_staticBody;
-			tempDef.position.Set(float32(400.f), float32(-20.f));
+			tempDef.position.Set(float32(400.f), float32(0.f));
 
 			tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, SWITCH, PLAYER);
+			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), true, TRIGGER, PLAYER | OBJECTS);
 			tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 
 			
 
 		}
 
-		{
-			//Creates entity
-			auto entity = ECS::CreateEntity();
-			ECS::SetIsBridgeOne(entity, true);
-
-			//Add components
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<PhysicsBody>(entity);
-			ECS::AttachComponent<Bridge>(entity);
-
-			//Sets up components
-			std::string fileName = "ForestTiles/Bridge_Up.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 140);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
+		//{
+		//	//Creates entity
+		//	auto entity = ECS::CreateEntity();
+		//	ECS::SetIsBridgeOne(entity, true);
+		//	bridge = entity;
 
 
-			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+		//	//Add components
+		//	ECS::AttachComponent<Sprite>(entity);
+		//	ECS::AttachComponent<Transform>(entity);
+		//	ECS::AttachComponent<PhysicsBody>(entity);
+		//	ECS::AttachComponent<Bridge>(entity);
+
+		//	//Sets up components
+		//	std::string fileName = "ForestTiles/Interactables/Bridge_Up.png";
+		//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 360);
+		//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
 
 
-			float shrinkX = 0.f;
-			float shrinkY = 0.f;
-			b2Body* tempBody;
-			b2BodyDef tempDef;
-			tempDef.type = b2_staticBody;
-			tempDef.position.Set(float32(460.f), float32(15.f));
-
-			tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, OBJECTS, PLAYER);
-			tempPhsBody.SetColor(vec4(1.f, 2.f, 4.f, 0.3f));
+		//	auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		//	auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 
-		}
+		//	float shrinkX = 0.f;
+		//	float shrinkY = 0.f;
+		//	b2Body* tempBody;
+		//	b2BodyDef tempDef;
+		//	tempDef.type = b2_staticBody;
+		//	tempDef.position.Set(float32(490.f), float32(80.f));
 
-	}
+		//	tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-	//Setup Second Hole
-
-	{
-
-	int fillDirt = 0;
-
-	for (int i = 0; i < 2; i++)
-	{
-
-		{
-			//Creates entity
-			auto entity = ECS::CreateEntity();
-
-			//Add components
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<PhysicsBody>(entity);
-
-			//Sets up components
-			std::string fileName = "ForestTiles/Dirt_Tile1.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 208, 40);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
-
-			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-			float shrinkX = 0.f;
-			float shrinkY = 0.f;
-			b2Body* tempBody;
-			b2BodyDef tempDef;
-			tempDef.type = b2_staticBody;
-			tempDef.position.Set(float32(538.f), float32(-122.f - fillDirt));
-
-			tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-				float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, GROUND, PLAYER | ENEMY | OBJECTS);
-			tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-		}
-
-		fillDirt = fillDirt + 40;
-	}
+		//	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, OBJECTS, PLAYER);
+		//	tempPhsBody.SetColor(vec4(1.f, 2.f, 4.f, 0.3f));
 
 
-	{
-		//Setup new Entity
-
-		/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
-
-		//Creates entity
-		auto entity = ECS::CreateEntity();
-
-		//Add components
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-
-		//Set up the components
-		std::string fileName = "ForestTiles/Grass_Tile1_.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 40);
-		ECS::GetComponent<Sprite>(entity).SetTransparency(.9f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(434.f, -100.f, 2.f));
+		//}
 
 	}
 
-	}
-
-	
-	////PLATFORM 1 GROUP
-	//{
-	//	float physBodyX = 140.f;
-	//	float physBodyY = 62.f;
-	//	float posX = 0.f;
-	//	float posY = -24.f;
-	//	float topOffset = -18.f;
-	//	//small platform 1(textured)
-	//	{
-	//		//Creates entity
-	//		auto entity = ECS::CreateEntity();
-
-	//		//Add components
-	//		ECS::AttachComponent<Sprite>(entity);
-	//		ECS::AttachComponent<Transform>(entity);
-	//		ECS::AttachComponent<PhysicsBody>(entity);
-
-	//		//Sets up components
-	//		std::string fileName = "WallTiles/platformBH.png";
-	//		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 144, 64);
-	//		ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
-
-	//		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-	//		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-	//		float shrinkX = 0.f;
-	//		float shrinkY = 26.f;
-	//		b2Body* tempBody;
-	//		b2BodyDef tempDef;
-	//		tempDef.type = b2_staticBody;
-	//		tempDef.position.Set(float32(posX), float32(posY));
-
-	//		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-	//		tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-	//			float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
-	//		tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-
-	//	}
-	//	////platform top half
-	//	//{
-	//	//	//Creates entity
-	//	//	auto entity = ECS::CreateEntity();
-
-	//	//	//Add components
-	//	//	ECS::AttachComponent<Sprite>(entity);
-	//	//	ECS::AttachComponent<Transform>(entity);
-	//	//	ECS::AttachComponent<PhysicsBody>(entity);
-
-	//	//	//Sets up components
-	//	//	std::string fileName = "WallTiles/platformtop.png";
-	//	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 144, 16);
-	//	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
-
-	//	//	auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-	//	//	auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-	//	//	b2Body* tempBody;
-	//	//	b2BodyDef tempDef;
-	//	//	tempDef.type = b2_staticBody;
-	//	//	tempDef.position.Set(float32(posX), float32(posY+40.f));
-
-	//	//	tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-	//	//	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth()),
-	//	//		float(tempSpr.GetHeight()), vec2(0.f, topOffset), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
-	//	//	tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-
-	//	//}
-	//	//small platform 1(top)
-	//	{
-	//		//Creates entity
-	//		auto entity = ECS::CreateEntity();
-
-	//		//Add components
-	//		ECS::AttachComponent<Transform>(entity);
-	//		ECS::AttachComponent<PhysicsBody>(entity);
-
-	//		//Sets up components
-	//		ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
-	//		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-	//		float shrinkX = 0.f;
-	//		float shrinkY = 0.f;
-	//		b2Body* tempBody;
-	//		b2BodyDef tempDef;
-	//		tempDef.type = b2_staticBody;
-	//		tempDef.position.Set(float32(posX), float32(posY));
-
-	//		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-	//		tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
-	//			float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS | HEXAGON);
-	//		tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
-
-	//	}
-
-	//	//small platform 1(bottom)
-	//	{
-	//		//Creates entity
-	//		auto entity = ECS::CreateEntity();
-
-	//		//Add components
-	//		ECS::AttachComponent<Transform>(entity);
-	//		ECS::AttachComponent<PhysicsBody>(entity);
-
-	//		//Sets up components
-	//		ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
-	//		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-	//		float shrinkX = 0.f;
-	//		float shrinkY = (posY / 2.f) + 20;
-	//		b2Body* tempBody;
-	//		b2BodyDef tempDef;
-	//		tempDef.type = b2_staticBody;
-	//		tempDef.position.Set(float32(posX), float32(posY));
-
-	//		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-	//		tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
-	//			float(physBodyY / 2), vec2(0.f, 8.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS | HEXAGON);
-	//		tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
-
-	//	}
-	//}
 
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 	ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
