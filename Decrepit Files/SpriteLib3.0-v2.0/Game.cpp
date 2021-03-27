@@ -46,7 +46,7 @@ void Game::InitGame()
 	m_scenes.push_back(new MainMenu("Decrepit"));
 	 
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[1];
+	m_activeScene = m_scenes[2];
 
 
 	m_activeScene->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));

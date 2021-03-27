@@ -35,10 +35,10 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 	b2Filter filterB = fixtureB->GetFilterData();
 	auto& playerJump = ECS::GetComponent<CanJump>((int)fixtureB->GetBody()->GetUserData());
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
-	//auto& keyOne = ECS::GetComponent<PhysicsBody>(MainEntities::keyOne());
-	//auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
-	auto& switchOneTransform = ECS::GetComponent<Sprite>(MainEntities::switchOne());
-	auto& switchOnePhysics = ECS::GetComponent<PhysicsBody>(MainEntities::switchOne());
+	auto& keyOne = ECS::GetComponent<PhysicsBody>(MainEntities::keyOne());
+	auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
+	//auto& switchOneTransform = ECS::GetComponent<Sprite>(MainEntities::switchOne());
+	//auto& switchOnePhysics = ECS::GetComponent<PhysicsBody>(MainEntities::switchOne());
 	//auto& switchTwo = ECS::GetComponent<PhysicsBody>(MainEntities::switchTwo());
 	//auto& bridgeOneTransform = ECS::GetComponent<Sprite>(MainEntities::bridgeOne());
 	//auto& bridgeOnePhysics = ECS::GetComponent<PhysicsBody>(MainEntities::bridgeOne());
@@ -118,85 +118,85 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 		}
 	}
 
-	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == TRIGGER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == TRIGGER))
-	{
-
-		std::string switchOn = "ForestTiles/Interactables/Switch_On.png";
-		//std::string bridgeDown = "ForestTiles/Interactables/Bridge_Down.png";
-
-		if (filterA.categoryBits == TRIGGER)
-		{
-			
-			switchOneTransform.LoadSprite(switchOn, 64, 64);
-			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
-			
-		}
-		else if (filterB.categoryBits == TRIGGER)
-		{
-		
-			switchOneTransform.LoadSprite(switchOn, 64, 64);
-			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
-			
-		}
-	}
-
-
-	//if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
+	//if ((filterA.categoryBits == PLAYER && filterB.categoryBits == TRIGGER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == TRIGGER))
 	//{
-	//	if (filterA.categoryBits == PLAYER)
+
+	//	std::string switchOn = "ForestTiles/Interactables/Switch_On.png";
+	//	//std::string bridgeDown = "ForestTiles/Interactables/Bridge_Down.png";
+
+	//	if (filterA.categoryBits == TRIGGER)
 	//	{
-	//		player.SetPosition(b2Vec2(0, 400), true);
-
-
+	//		
+	//		switchOneTransform.LoadSprite(switchOn, 64, 64);
+	//		//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
+	//		
 	//	}
-	//	else if (filterB.categoryBits == PLAYER)
+	//	else if (filterB.categoryBits == TRIGGER)
 	//	{
-	//		player.SetPosition(b2Vec2(0, 400), true);
+	//	
+	//		switchOneTransform.LoadSprite(switchOn, 64, 64);
+	//		//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
+	//		
 	//	}
-
 	//}
-	//if ((filterA.categoryBits == PLAYER && filterB.categoryBits == KEY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == KEY))
-	//	{
-	//		if (filterA.categoryBits == PLAYER)
-	//		{
-	//			keyOne.SetPosition(b2Vec2(-100, -400), true);
-	//			door.haveKey = true;
 
-	//		}
-	//		else if (filterB.categoryBits == PLAYER)
-	//		{
-	//			keyOne.SetPosition(b2Vec2(-100, -400), true);
-	//			door.haveKey = true;
 
-	//		}
-	//	}
-	//	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == DOOR) || (filterB.categoryBits == PLAYER && filterA.categoryBits == DOOR))
-	//	{
-	//		if (filterA.categoryBits == PLAYER)
-	//		{
-	//			//cout << door.doorOpen;
-	//			if (door.haveKey) {
-	//				door.doorOpen = true;
-	//			}
-	//			if (door.doorTransport) {
-	//				player.SetPosition(b2Vec2(0, 350), true);
-	//			}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+			player.SetPosition(b2Vec2(0, 400), true);
 
-	//		}
-	//		else if (filterB.categoryBits == PLAYER)
-	//		{
-	//			//cout << door.doorOpen;
 
-	//			if (door.haveKey) {
-	//				door.doorOpen = true;
-	//			}
-	//			if (door.doorTransport) {
-	//				player.SetPosition(b2Vec2(0, 350), true);
-	//			}
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+			player.SetPosition(b2Vec2(0, 400), true);
+		}
 
-	//		}
-	//	}
-		/*if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
+	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == KEY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == KEY))
+		{
+			if (filterA.categoryBits == PLAYER)
+			{
+				keyOne.SetPosition(b2Vec2(-100, -400), true);
+				door.haveKey = true;
+
+			}
+			else if (filterB.categoryBits == PLAYER)
+			{
+				keyOne.SetPosition(b2Vec2(-100, -400), true);
+				door.haveKey = true;
+
+			}
+	}
+		if ((filterA.categoryBits == PLAYER && filterB.categoryBits == DOOR) || (filterB.categoryBits == PLAYER && filterA.categoryBits == DOOR))
+		{
+			if (filterA.categoryBits == PLAYER)
+			{
+				//cout << door.doorOpen;
+				if (door.haveKey) {
+					door.doorOpen = true;
+				}
+				if (door.doorTransport) {
+					player.SetPosition(b2Vec2(0, 350), true);
+				}
+
+			}
+			else if (filterB.categoryBits == PLAYER)
+			{
+				//cout << door.doorOpen;
+
+				if (door.haveKey) {
+					door.doorOpen = true;
+				}
+				if (door.doorTransport) {
+					player.SetPosition(b2Vec2(0, 350), true);
+				}
+
+			}
+		}
+		if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
 		{
 			if (filterA.categoryBits == PLAYER)
 			{
@@ -210,7 +210,7 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 				
 
 			}
-		}*/
+		}
 		
 
 }

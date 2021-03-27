@@ -19,9 +19,9 @@ public:
 	void spawnLeftWall();
 	void spawnGenericGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
 	void spawnGround();
-	void twoWideGround();
-	void spawnConnectorGround();
-	void floatingGround();
+	void twoWideGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
+	void spawnConnectorGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
+	void floatingGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
 
 
 	//Input overrides
