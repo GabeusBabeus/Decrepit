@@ -178,7 +178,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<AnimationController>(entity);
 
 		//Sets up the components
-		std::string fileName = "spritesheets/PlayerIdle.png";
+		std::string fileName = "spritesheets/PNG/PlayerIdle.png";
 		
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 8.f));

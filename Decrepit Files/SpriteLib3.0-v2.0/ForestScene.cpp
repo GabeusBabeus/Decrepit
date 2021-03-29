@@ -603,7 +603,7 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<HorizontalScroll>(entity);
 		ECS::AttachComponent<VerticalScroll>(entity);
 
-		vec4 temp = vec4(-175.f, 275.f, -180.f, 175.f);
+		vec4 temp = vec4(-155.f, 300.f, -200.f, 150.f);
 		ECS::GetComponent<Camera>(entity).SetOrthoSize(temp);
 		ECS::GetComponent<Camera>(entity).SetWindowSize(vec2(float(windowWidth), float(windowHeight)));
 		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100.f, 100.f);
@@ -678,22 +678,29 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 	{
 		/*Scene::CreatePhysicsSprite(m_sceneReg, "LinkStandby", 80, 60, 1.f, vec3(0.f, 30.f, 2.f), b2_dynamicBody, 0.f, 0.f, true, true)*/
 
+		auto idle = File::LoadJSON("idle.json");
+
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainPlayer(entity, true);
-
-		player = entity;
 
 		//Add components
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 		ECS::AttachComponent<CanJump>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
 		//Sets up the components
-		std::string fileName = "Character.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 27, 27);
+		std::string fileName = "spritesheets/PNG/PlayerIdle.png";
+
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 4.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 3.f));
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(idle["idle"]);
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 25, true, &animController);
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -704,14 +711,11 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(0.f), float32(30.f));
+		tempDef.position.Set(float32(20.f), float32(20.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		//tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, PLAYER, ENEMY | OBJECTS | PICKUP | TRIGGER, 0.5f, 3.f);
-		tempPhsBody = PhysicsBody(entity, tempBody, float((tempSpr.GetHeight() - shrinkY) / 2.f), vec2(0.f, 0.f), false, PLAYER, GROUND | ENVIRONMENT | ENEMY | OBJECTS | TRIGGER, 0.5f, 3.f);
-		//std::vector<b2Vec2> points = {b2Vec2(-tempSpr.GetWidth()/2.f, -tempSpr.GetHeight()/2.f), b2Vec2(tempSpr.GetWidth()/2.f, -tempSpr.GetHeight()/2.f), b2Vec2(0.f, tempSpr.GetHeight()/2.f)};
-		//tempPhsBody = PhysicsBody(entity, BodyType::TRIANGLE, tempBody, points, vec2(0.f, 0.f), false, PLAYER, ENEMY | OBJECTS | PICKUP | TRIGGER, 0.5f, 3.f);
+		tempPhsBody = PhysicsBody(entity, tempBody, float((tempSpr.GetHeight() - shrinkY) / 2.f), vec2(0.f, 0.f), false, PLAYER, ENVIRONMENT | ENEMY | OBJECTS | TRIGGER | HEXAGON, 1.f, 4.5f);
 
 		tempPhsBody.SetRotationAngleDeg(0.f);
 		tempPhsBody.SetFixedRotation(true);
@@ -882,7 +886,7 @@ void ForestScene::KeyboardDown()
 	if (Input::GetKeyDown(Key::M)) {
 		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
 		player.SetVelocity(vec3(0, 0, 0));
-		player.SetPosition(b2Vec2(-100, -40), true);
+		player.SetPosition(b2Vec2(20, 20), true);
 		player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
 		
 	}
