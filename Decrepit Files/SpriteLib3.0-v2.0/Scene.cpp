@@ -175,6 +175,12 @@ b2World & Scene::GetPhysicsWorld()
 {
 	return *m_physicsWorld;
 }
+void Scene::setLevel(std::string lvl) {
+	currLevel = lvl;
+}
+std::string Scene::getLevel() {
+	return currLevel;
+}
 
 void Scene::SetWindowSize(float windowWidth, float windowHeight)
 {

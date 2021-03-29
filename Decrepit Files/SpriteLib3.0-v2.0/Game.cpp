@@ -3,6 +3,7 @@
 #include "TowerGroundScene.h"
 #include "MainMenu.h"
 #include "Scene.h"
+#include "BasementScene.h"
 #include <random>
 
 
@@ -44,6 +45,7 @@ void Game::InitGame()
 	m_scenes.push_back(new PhysicsPlayground("Tower Base"));
 	m_scenes.push_back(new AnimationSpritePlayground("Animation TIEM!!!!"));
 	m_scenes.push_back(new MainMenu("Decrepit"));
+	m_scenes.push_back(new BasementScene("Basement"));
 	 
 	//Sets active scene reference to our scene
 	m_activeScene = m_scenes[2];
@@ -261,6 +263,8 @@ void Game::KeyboardUp()
 		}
 	}
 }
+
+
 
 void Game::MouseMotion(SDL_MouseMotionEvent evnt)
 {

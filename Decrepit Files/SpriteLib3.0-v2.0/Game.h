@@ -2,6 +2,7 @@
 #define __GAME_H__
 
 #include "BackEnd.h"
+#include <string>
 
 //Our main class for running our game
 class Game
@@ -64,6 +65,7 @@ public:
 	void KeyboardDown();
 	void KeyboardUp();
 
+
 	//Mouse input
 	void MouseMotion(SDL_MouseMotionEvent evnt);
 	void MouseClick(SDL_MouseButtonEvent evnt);
@@ -84,6 +86,8 @@ private:
 	bool m_motion = false;
 	bool m_click = false;
 	bool m_wheel = false;
+
+	std::string currLevel = "mainmenu";
 
 	//Xbox Input
 	XInputManager input;

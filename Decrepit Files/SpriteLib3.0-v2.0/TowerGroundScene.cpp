@@ -2,7 +2,6 @@
 #include "Platform.h"
 #include "Utilities.h"
 #include <random>
-#include "Platform.cpp"
 #include "Door.h"
 #include "LadderTrigger.h"
 #include "LadderTeleport.h"
@@ -1311,13 +1310,13 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 void TowerGroundScene::Update()
 {
-	if (levelMain) {
+	if (getLevel() == "mainmenu") {
 		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainMenu()));
 		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainMenu()));
 	}
 
 
-	if (levelOne) {
+	if (getLevel() == "levelone") {
 		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 		auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
@@ -1375,7 +1374,7 @@ void TowerGroundScene::KeyboardHold()
 	float speed = 3.f;
 	b2Vec2 vel = b2Vec2(0.f, 0.f);
 
-	if (levelOne) {
+	if (getLevel() == "levelone" ) {
 		if (Input::GetKey(Key::A))
 		{
 			player.GetBody()->ApplyForceToCenter(b2Vec2(-200000.f * speed, 0.f), true);
@@ -1385,7 +1384,7 @@ void TowerGroundScene::KeyboardHold()
 			player.GetBody()->ApplyForceToCenter(b2Vec2(200000.f * speed, 0.f), true);
 		}
 	}
-	if (levelMain) {
+	if (getLevel() == "mainmenu") {
 		auto& pointer = ECS::GetComponent<Transform>(m_pointer);
 		
 		if (pos == 0) {
@@ -1424,18 +1423,17 @@ void TowerGroundScene::KeyboardDown()
 	{
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
 	}
-	if (levelMain) {
+	if (getLevel() == "mainmenu") {
 		if (Input::GetKeyDown(Key::Enter)) {
 			if (pos == 0) {
-				levelMain = false;
-				levelOne = true;
+				setLevel("levelone");
 			}
 			else if (pos == 1) {
 				exit(1);
 			}
 		}
 	}
-	if (levelOne) {
+	if (getLevel() == "levelone") {
 		if (canJump.m_canJump)
 		{
 			if (Input::GetKeyDown(Key::Space))
