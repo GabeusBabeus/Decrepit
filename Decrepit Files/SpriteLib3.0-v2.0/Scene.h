@@ -23,12 +23,16 @@ public:
 	virtual void InitScene(float windowWidth, float windowHeight);
 
 	virtual void Update();
-
+	
 	virtual void GUI();
 
 	void AdjustScrollOffset();
 	void CreateCameraEntity(bool mainCamera, float windowWidth, float windowHeight, float left, float right, float bottom, float top, 
 								float zNear, float zFar, float aspectRatio, bool vertScroll=false, bool horizScroll=false);
+
+
+	void currentIndex(int currentIndex);
+	void nextIndex(int nextIndex);
 
 	//Gamepad Input
 	//Because these are virtual you can override them in your inherited classes.
@@ -83,11 +87,15 @@ protected:
 	std::string currLevel = "mainmenu";
 	entt::registry* m_sceneReg = nullptr;	
 	std::string m_name = "Default Name";
+
+
+
 	//static int startingScene;
 private:
 	//Hello world entity number
 	int m_helloWorldSign = 0;
-	
+	int m_nextIndex = 0;
+	int m_currentIndex = 0;
 	
 };
 

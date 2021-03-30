@@ -31,6 +31,10 @@ Game::~Game()
 
 void Game::InitGame()
 {
+
+
+	PhysicsSystem::CleanupBodies();
+
 	//Initializes the backend with window width and height values
 	BackEnd::InitBackEnd(719.f, 436.f);
 
@@ -39,18 +43,17 @@ void Game::InitGame()
 
 	//Creates a new scene.
 	//Replace this with your own scene.
-	m_scenes.push_back(new FirstCreation("FIRST SCENE!!!!"));
+	
 	m_scenes.push_back(new ForestScene("Forest Area"));
-	m_scenes.push_back(new TowerGroundScene("Level 1"));
-	m_scenes.push_back(new PhysicsPlayground("Tower Base"));
-	m_scenes.push_back(new AnimationSpritePlayground("Animation TIEM!!!!"));
+	m_scenes.push_back(new TowerGroundScene("Level 1"));	
 	m_scenes.push_back(new MainMenu("Decrepit"));
 	m_scenes.push_back(new BasementScene("Basement"));
 	 
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[2];
-
-
+	m_activeScene = m_scenes[0];
+	
+	
+	
 	m_activeScene->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 
 	//Sets m_register to point to the register in the active scene
@@ -119,8 +122,23 @@ void Game::Update()
 	//Update the backend
 	BackEnd::Update(m_register);
 
+	
+
 	//Update Physics System
 	PhysicsSystem::Update(m_register, m_activeScene->GetPhysicsWorld());
+
+	
+	if (index != 0) {
+		m_activeScene->Unload();
+
+		m_activeScene = m_scenes[index];
+
+		m_activeScene->InitScene(BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
+		m_register = m_activeScene->GetScene();
+
+		m_window->SetWindowName(m_activeScene->GetName());
+		PhysicsSystem::Init();
+	}
 
 	//Updates the active scene
 	m_activeScene->Update();

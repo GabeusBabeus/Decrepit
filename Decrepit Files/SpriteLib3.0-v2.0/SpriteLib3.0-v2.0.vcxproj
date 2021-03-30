@@ -152,6 +152,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FirstCreation.h" />
     <ClInclude Include="ForestScene.h" />
+    <ClInclude Include="ForestSceneListener.h" />
     <ClInclude Include="Framebuffer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GrainEffect.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FirstCreation.cpp" />
     <ClCompile Include="ForestScene.cpp" />
+    <ClCompile Include="ForestSceneListener.cpp" />
     <ClCompile Include="Framebuffer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GrainEffect.cpp" />

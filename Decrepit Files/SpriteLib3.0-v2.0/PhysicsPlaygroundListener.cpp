@@ -37,8 +37,7 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 	auto& keyOne = ECS::GetComponent<PhysicsBody>(MainEntities::keyOne());
 	auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
-	//auto& switchOneTransform = ECS::GetComponent<Sprite>(MainEntities::switchOne());
-	//auto& switchOnePhysics = ECS::GetComponent<PhysicsBody>(MainEntities::switchOne());
+	
 	//auto& switchTwo = ECS::GetComponent<PhysicsBody>(MainEntities::switchTwo());
 	//auto& bridgeOneTransform = ECS::GetComponent<Sprite>(MainEntities::bridgeOne());
 	//auto& bridgeOnePhysics = ECS::GetComponent<PhysicsBody>(MainEntities::bridgeOne());
@@ -118,27 +117,6 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 		}
 	}
 
-	//if ((filterA.categoryBits == PLAYER && filterB.categoryBits == TRIGGER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == TRIGGER))
-	//{
-
-	//	std::string switchOn = "ForestTiles/Interactables/Switch_On.png";
-	//	//std::string bridgeDown = "ForestTiles/Interactables/Bridge_Down.png";
-
-	//	if (filterA.categoryBits == TRIGGER)
-	//	{
-	//		
-	//		switchOneTransform.LoadSprite(switchOn, 64, 64);
-	//		//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
-	//		
-	//	}
-	//	else if (filterB.categoryBits == TRIGGER)
-	//	{
-	//	
-	//		switchOneTransform.LoadSprite(switchOn, 64, 64);
-	//		//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
-	//		
-	//	}
-	//}
 
 
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))

@@ -85,6 +85,21 @@ void Scene::GUI()
 
 }
 
+
+
+void Scene::currentIndex(int currentInd)
+{
+	m_currentIndex = currentInd;
+}
+
+
+void Scene::nextIndex(int nextInd)
+{
+
+	m_nextIndex = nextInd;
+
+}
+
 void Scene::AdjustScrollOffset()
 {
 	float maxSizeX = ECS::GetComponent<Camera>(MainEntities::MainCamera()).GetOrthoSize().y;
@@ -181,6 +196,9 @@ void Scene::setLevel(std::string lvl) {
 std::string Scene::getLevel() {
 	return currLevel;
 }
+
+
+
 
 void Scene::SetWindowSize(float windowWidth, float windowHeight)
 {

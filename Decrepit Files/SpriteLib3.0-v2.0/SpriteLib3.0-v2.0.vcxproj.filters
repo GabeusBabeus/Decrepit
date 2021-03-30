@@ -213,6 +213,9 @@
     <ClInclude Include="BasementScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ForestSceneListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationController.cpp">
@@ -399,6 +402,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BasementScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ForestSceneListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

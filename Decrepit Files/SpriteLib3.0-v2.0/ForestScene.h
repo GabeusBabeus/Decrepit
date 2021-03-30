@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "PhysicsPlaygroundListener.h"
+#include "ForestSceneListener.h"
 #include <string>
 #include "Game.h"
 
@@ -31,7 +31,7 @@ public:
 
 protected:
 
-	PhysicsPlaygroundListener listener;
+	ForestSceneListener listener;
 
 	
 	bool m_firstWindow = false;
