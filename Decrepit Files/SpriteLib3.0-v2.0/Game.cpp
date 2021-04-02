@@ -4,6 +4,7 @@
 #include "MainMenu.h"
 #include "Scene.h"
 #include "BasementScene.h"
+#include "TopLevelScene.h"
 #include <random>
 
 
@@ -44,13 +45,13 @@ void Game::InitGame()
 	//Creates a new scene.
 	//Replace this with your own scene.
 	
-	m_scenes.push_back(new ForestScene("Forest Area"));
-	m_scenes.push_back(new TowerGroundScene("Level 1"));	
-	m_scenes.push_back(new MainMenu("Decrepit"));
-	m_scenes.push_back(new BasementScene("Basement"));
-	 
+	/*0*/m_scenes.push_back(new ForestScene("Forest Area"));
+	/*1*/m_scenes.push_back(new TowerGroundScene("Level 1"));
+	/*2*/m_scenes.push_back(new MainMenu("Decrepit"));
+	/*3*/m_scenes.push_back(new BasementScene("Basement"));
+	/*4*/m_scenes.push_back(new TopLevelScene("The End"));
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[0];
+	m_activeScene = m_scenes[4];
 	
 	
 	

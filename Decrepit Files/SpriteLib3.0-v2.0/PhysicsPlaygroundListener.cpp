@@ -119,20 +119,7 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 
 
 
-	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER))
-	{
-		if (filterA.categoryBits == PLAYER)
-		{
-			player.SetPosition(b2Vec2(0, 400), true);
-
-
-		}
-		else if (filterB.categoryBits == PLAYER)
-		{
-			player.SetPosition(b2Vec2(0, 400), true);
-		}
-
-	}
+	
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == KEY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == KEY))
 		{
 			if (filterA.categoryBits == PLAYER)
@@ -147,6 +134,21 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 				door.haveKey = true;
 
 			}
+	}
+	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == PICKUP) || (filterB.categoryBits == PLAYER && filterA.categoryBits == PICKUP))
+	{
+		if (filterA.categoryBits == PLAYER)
+		{
+			keyOne.SetPosition(b2Vec2(-100, -400), true);
+			door.haveKey = true;
+
+		}
+		else if (filterB.categoryBits == PLAYER)
+		{
+			keyOne.SetPosition(b2Vec2(-100, -400), true);
+			door.haveKey = true;
+
+		}
 	}
 		if ((filterA.categoryBits == PLAYER && filterB.categoryBits == DOOR) || (filterB.categoryBits == PLAYER && filterA.categoryBits == DOOR))
 		{

@@ -141,6 +141,7 @@
     <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="BackEnd.h" />
     <ClInclude Include="BasementScene.h" />
+    <ClInclude Include="BasementSceneListener.h" />
     <ClInclude Include="BloomEffect.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="Camera.h" />
@@ -190,6 +191,8 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TopLevelListener.h" />
+    <ClInclude Include="TopLevelScene.h" />
     <ClInclude Include="TowerGroundScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TranslateTrigger.h" />
@@ -209,6 +212,7 @@
     <ClCompile Include="AnimationSystem.cpp" />
     <ClCompile Include="BackEnd.cpp" />
     <ClCompile Include="BasementScene.cpp" />
+    <ClCompile Include="BasementSceneListener.cpp" />
     <ClCompile Include="BloomEffect.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
@@ -255,6 +259,8 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TopLevelListener.cpp" />
+    <ClCompile Include="TopLevelScene.cpp" />
     <ClCompile Include="TowerGroundScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TranslateTrigger.cpp" />
