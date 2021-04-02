@@ -1,4 +1,2 @@
-﻿  Game.cpp
-C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\Game.cpp(136,79): warning C4244: 'argument': conversion from 'GLsizei' to 'float', possible loss of data
-C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\Game.cpp(136,51): warning C4244: 'argument': conversion from 'GLsizei' to 'float', possible loss of data
-  SpriteLib3.0-v2.0.vcxproj -> C:\Users\gabem\Desktop\Game\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
+﻿  TopLevelScene.cpp
+  SpriteLib3.0-v2.0.vcxproj -> C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
