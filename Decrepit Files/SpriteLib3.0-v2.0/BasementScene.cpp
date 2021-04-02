@@ -129,7 +129,7 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-100.f), float32(-40.f));
+		tempDef.position.Set(float32(-100.f), float32(15.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -205,10 +205,13 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 
 				}
 			}
-			for (int i = 0; i < 3; i++) {
-
-				int increment = 192;
-				//right wall
+			{
+				float physBodyX = 140.f;
+				float physBodyY = 64.f;
+				float posX = -45.f;
+				float posY = -42.f;
+				float topOffset = -18.f;
+				//small platform 1(textured)
 				{
 					//Creates entity
 					auto entity = ECS::CreateEntity();
@@ -219,11 +222,67 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 					ECS::AttachComponent<PhysicsBody>(entity);
 
 					//Sets up components
-					std::string fileName = "Tower Inside/Base/Filling/FIXED_RIGHT.png";
-					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 192);
-					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
+					std::string fileName = "WallTiles/platformBH.png";
+					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 144, 64);
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
 
 					auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+					float shrinkX = 0.f;
+					float shrinkY = 26.f;
+					b2Body* tempBody;
+					b2BodyDef tempDef;
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(posX), float32(posY));
+
+					tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+				}
+				////platform top half
+				//{
+				//	//Creates entity
+				//	auto entity = ECS::CreateEntity();
+
+				//	//Add components
+				//	ECS::AttachComponent<Sprite>(entity);
+				//	ECS::AttachComponent<Transform>(entity);
+				//	ECS::AttachComponent<PhysicsBody>(entity);
+
+				//	//Sets up components
+				//	std::string fileName = "WallTiles/platformtop.png";
+				//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 144, 16);
+				//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
+
+				//	auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				//	auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+				//	b2Body* tempBody;
+				//	b2BodyDef tempDef;
+				//	tempDef.type = b2_staticBody;
+				//	tempDef.position.Set(float32(posX), float32(posY+40.f));
+
+				//	tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				//	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth()),
+				//		float(tempSpr.GetHeight()), vec2(0.f, topOffset), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+				//	tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+				//}
+				//small platform 1(top)
+				{
+					//Creates entity
+					auto entity = ECS::CreateEntity();
+
+					//Add components
+					ECS::AttachComponent<Transform>(entity);
+					ECS::AttachComponent<PhysicsBody>(entity);
+
+					//Sets up components
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
 					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 					float shrinkX = 0.f;
@@ -231,19 +290,371 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 					b2Body* tempBody;
 					b2BodyDef tempDef;
 					tempDef.type = b2_staticBody;
-					tempDef.position.Set(float32(672.f), float32(-15.f + (increment * i)));
+					tempDef.position.Set(float32(posX), float32(posY));
+
+					tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+					tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+						float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
+
+				}
+
+				//small platform 1(bottom)
+				{
+					//Creates entity
+					auto entity = ECS::CreateEntity();
+
+					//Add components
+					ECS::AttachComponent<Transform>(entity);
+					ECS::AttachComponent<PhysicsBody>(entity);
+
+					//Sets up components
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
+					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+					float shrinkX = 0.f;
+					float shrinkY = (posY / 2.f) + 20;
+					b2Body* tempBody;
+					b2BodyDef tempDef;
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(posX), float32(posY));
+
+					tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+					tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+						float(physBodyY / 2), vec2(0.f, 8.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+				}
+			}
+			//SPIKE ON PLAT 2
+			{
+
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+
+			//Add components
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+			ECS::AttachComponent<PhysicsBody>(entity);
+
+			//Sets up components
+			std::string fileName = "Tower Inside/Spikes.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 4.f));
+
+			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+			float shrinkX = 0.f;
+			float shrinkY = 0.f;
+			b2Body* tempBody;
+			b2BodyDef tempDef;
+			tempDef.type = b2_staticBody;
+			tempDef.position.Set(float32(190), float32(8.f));
+
+			tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+				float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, ENEMY, PLAYER | ENEMY | OBJECTS | HEXAGON);
+			tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+				}
+			//SMALL PLATFORM 2
+			{
+				float physBodyX = 140.f;
+				float physBodyY = 64.f;
+				float posX = 180.f;
+				float posY = -20.f;
+				float topOffset = -18.f;
+				//small platform 2(textured)
+				{
+					//Creates entity
+					auto entity = ECS::CreateEntity();
+
+					//Add components
+					ECS::AttachComponent<Sprite>(entity);
+					ECS::AttachComponent<Transform>(entity);
+					ECS::AttachComponent<PhysicsBody>(entity);
+
+					//Sets up components
+					std::string fileName = "WallTiles/platformBH.png";
+					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 144, 64);
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
+
+					auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+					float shrinkX = 0.f;
+					float shrinkY = 26.f;
+					b2Body* tempBody;
+					b2BodyDef tempDef;
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(posX), float32(posY));
 
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
 					tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 
-					//Filling in the terrain without multiple scopes
+				}
+
+				//small platform 2(top)
+				{
+					//Creates entity
+					auto entity = ECS::CreateEntity();
+
+					//Add components
+					ECS::AttachComponent<Transform>(entity);
+					ECS::AttachComponent<PhysicsBody>(entity);
+
+					//Sets up components
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
+					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+					float shrinkX = 0.f;
+					float shrinkY = 0.f;
+					b2Body* tempBody;
+					b2BodyDef tempDef;
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(posX), float32(posY));
+
+					tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+					tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+						float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
 
 				}
-			}
-			
+
+				//small platform 2(bottom)
+				{
+					//Creates entity
+					auto entity = ECS::CreateEntity();
+
+					//Add components
+					ECS::AttachComponent<Transform>(entity);
+					ECS::AttachComponent<PhysicsBody>(entity);
+
+					//Sets up components
+					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
+					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+					float shrinkX = 0.f;
+					float shrinkY = (posY / 2.f) + 20;
+					b2Body* tempBody;
+					b2BodyDef tempDef;
+					tempDef.type = b2_staticBody;
+					tempDef.position.Set(float32(posX), float32(posY));
+
+					tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+					tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+						float(physBodyY / 2), vec2(0.f, 8.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+				}
+				//SMALL PLATFORM 3
+				{
+					float physBodyX = 140.f;
+					float physBodyY = 64.f;
+					float posX = 420.f;
+					float posY = -46.f;
+					float topOffset = -18.f;
+					//small platform 3(textured)
+					{
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+
+						//Add components
+						ECS::AttachComponent<Sprite>(entity);
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+
+						//Sets up components
+						std::string fileName = "WallTiles/platformBH.png";
+						ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 144, 64);
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 3.f));
+
+						auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						float shrinkX = 0.f;
+						float shrinkY = 26.f;
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(posX), float32(posY));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+							float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 12.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+					}
+
+					//small platform 3(top)
+					{
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+
+						//Add components
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+
+						//Sets up components
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						float shrinkX = 0.f;
+						float shrinkY = 0.f;
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(posX), float32(posY));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+							float(physBodyY / 2), vec2(0.f, 16.f), false, GROUND, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						tempPhsBody.SetColor(vec4(1.f, 0.f, 0.f, 0.3f));
+
+					}
+
+					//small platform 3(bottom)
+					{
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+
+						//Add components
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+
+						//Sets up components
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, 0.f, 4.f));
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						float shrinkX = 0.f;
+						float shrinkY = (posY / 2.f) + 20;
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(posX), float32(posY));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(physBodyX),
+							float(physBodyY / 2), vec2(0.f, 8.f), false, OBJECTS, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+					}
+					//LADDER TO NEXT LEVEL
+					{
+
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+
+						//Add components
+						ECS::AttachComponent<Sprite>(entity);
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+						ECS::AttachComponent<Trigger*>(entity);
+
+
+						//Sets up components
+						std::string fileName = "Tower Inside/Base/Filling/Ladder.png";
+						ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 192);
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
+						ECS::GetComponent<Trigger*>(entity) = new LadderTrigger();
+						ECS::GetComponent<Trigger*>(entity)->SetTriggerEntity(entity);
+
+						auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						float shrinkX = 40.f;
+						float shrinkY = 20.f;
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(-46.f), float32(70.f));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+							float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), true, TRIGGER, PLAYER | OBJECTS);
+						tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+					}
+					{
+
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+
+						//Add components
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+
+
+						//Sets up components
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
+
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(-46.f), float32(165.f));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(0), float(0), vec2(0.f, 0.f), false, LADDER, PLAYER | OBJECTS);
+						tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
+
+					}
+					//RIGHT WALL
+				}
+				for (int i = 0; i < 3; i++) {
+
+					int increment = 192;
+					//right wall
+					{
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+
+						//Add components
+						ECS::AttachComponent<Sprite>(entity);
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+
+						//Sets up components
+						std::string fileName = "Tower Inside/Base/Filling/FIXED_RIGHT.png";
+						ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 192);
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 3.f));
+
+						auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						float shrinkX = 0.f;
+						float shrinkY = 0.f;
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(672.f), float32(-15.f + (increment * i)));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+							float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, WALL, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+						//Filling in the terrain without multiple scopes
+
+					}
+				}
+
 				//ROOF
 				{
 					for (int i = 0; i < 13; i++)
@@ -269,7 +680,7 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 						b2Body* tempBody;
 						b2BodyDef tempDef;
 						tempDef.type = b2_staticBody;
-						tempDef.position.Set(float32((i - 2) * 64.f), float32(300.f));
+						tempDef.position.Set(float32((i - 2) * 64.f), float32(200.f));
 
 						tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -280,106 +691,6 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 					}
 
 
-
-				}
-				//LADDER TO NEXT LEVEL
-				{
-
-					//Creates entity
-					auto entity = ECS::CreateEntity();
-
-					//Add components
-					ECS::AttachComponent<Sprite>(entity);
-					ECS::AttachComponent<Transform>(entity);
-					ECS::AttachComponent<PhysicsBody>(entity);
-					ECS::AttachComponent<Trigger*>(entity);
-
-
-					//Sets up components
-					std::string fileName = "Tower Inside/Base/Filling/Ladder.png";
-					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 192);
-					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
-					ECS::GetComponent<Trigger*>(entity) = new LadderTrigger();
-					ECS::GetComponent<Trigger*>(entity)->SetTriggerEntity(entity);
-
-					auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-					float shrinkX = 40.f;
-					float shrinkY = 20.f;
-					b2Body* tempBody;
-					b2BodyDef tempDef;
-					tempDef.type = b2_staticBody;
-					tempDef.position.Set(float32(565.f), float32(165.f));
-
-					tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), true, TRIGGER, PLAYER | OBJECTS);
-					tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
-
-				}
-				{
-
-					//Creates entity
-					auto entity = ECS::CreateEntity();
-
-					//Add components
-					ECS::AttachComponent<Transform>(entity);
-					ECS::AttachComponent<PhysicsBody>(entity);
-
-
-					//Sets up components
-					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
-
-					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-					b2Body* tempBody;
-					b2BodyDef tempDef;
-					tempDef.type = b2_staticBody;
-					tempDef.position.Set(float32(565.f), float32(240.f));
-
-					tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-					tempPhsBody = PhysicsBody(entity, tempBody, float(0), float(0), vec2(0.f, 0.f), false, LADDER, PLAYER | OBJECTS);
-					tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
-
-				}
-
-				
-
-				////KEY
-				{
-
-					//Creates entity
-					auto entity = ECS::CreateEntity();
-					ECS::SetIsKeyOne(entity, true);
-
-					//Add components
-					ECS::AttachComponent<Sprite>(entity);
-					ECS::AttachComponent<Transform>(entity);
-					ECS::AttachComponent<PhysicsBody>(entity);
-
-					//Sets up components
-					std::string fileName = "Tower Inside/Key.png";
-					ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32);
-					ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 4.f));
-
-					auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-					auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-					float shrinkX = 20.f;
-					float shrinkY = 20.f;
-					b2Body* tempBody;
-					b2BodyDef tempDef;
-					tempDef.type = b2_staticBody;
-					tempDef.position.Set(float32(0.f), float32(-60.f));
-
-					tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-					tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-						float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, KEY, PLAYER | ENEMY | OBJECTS | HEXAGON);
-					tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
 
 				}
 
@@ -467,7 +778,7 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 			}
 			//SPIKE ON Ground
 
-			for (int i = 0; i < 25; i++) {
+			for (int i = 0; i < 18; i++) {
 				{
 
 					//Creates entity
@@ -491,7 +802,7 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 					b2Body* tempBody;
 					b2BodyDef tempDef;
 					tempDef.type = b2_staticBody;
-					tempDef.position.Set(float32(-112.f + (32 * i)), float32(-90.f));
+					tempDef.position.Set(float32(-32.f + (32 * i)), float32(-90.f));
 
 					tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -504,7 +815,7 @@ void BasementScene::InitScene(float windowWidth, float windowHeight)
 			}
 
 		}
-
+	}
 	
 
 

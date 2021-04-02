@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "PhysicsPlaygroundListener.h"
+#include "BasementSceneListener.h"
 #include <string>
 
 class BasementScene : public Scene
@@ -25,11 +25,8 @@ protected:
 
 	std::string m_fileInput;
 
-	PhysicsPlaygroundListener listener;
+	BasementSceneListener listener;
 	bool doorOpen = false;
-	int doubleJump = 0;
-	int m_pointer = 0;
-	int pos = 0;
 
 
 
