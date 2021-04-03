@@ -12,6 +12,7 @@ std::vector<std::string> m_bodyTypeMasks;
 
 void PhysicsSystem::Init()
 {
+	PhysicsSystem::CleanupBodies();
 	physicsDrawShader.Load("./assets/shader/StaticGeometry.vert", "./assets/shader/PhysicsColorDraw.frag");
 	 
 	if (!m_debugPlaneInit)

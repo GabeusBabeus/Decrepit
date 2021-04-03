@@ -1,6 +1,7 @@
 #include "ForestSceneListener.h"
 #include "ECS.h"
 #include "Utilities.h"
+#include "Scene.h"
 
 ForestSceneListener::ForestSceneListener()
 	:b2ContactListener()
@@ -39,7 +40,7 @@ void ForestSceneListener::BeginContact(b2Contact* contact) {
 	auto& switchOneTransform = ECS::GetComponent<Sprite>(MainEntities::switchOne());
 	auto& switchOnePhysics = ECS::GetComponent<PhysicsBody>(MainEntities::switchOne());
 
-
+	Scene change;
 
 
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == GROUND) || (filterB.categoryBits == PLAYER && filterA.categoryBits == GROUND))
@@ -125,14 +126,17 @@ void ForestSceneListener::BeginContact(b2Contact* contact) {
 
 		if (filterA.categoryBits == TRIGGER)
 		{
-
+			change.nextIndex(1);
+			
+			std::cout << change.checkScene();
 			switchOneTransform.LoadSprite(switchOn, 64, 64);
 			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
 
 		}
 		else if (filterB.categoryBits == TRIGGER)
 		{
-
+			/*changeScene->nextIndex(1);
+			changeScene->checkScene(changeScene->m_currentIndex, changeScene->m_nextIndex);*/
 			switchOneTransform.LoadSprite(switchOn, 64, 64);
 			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
 

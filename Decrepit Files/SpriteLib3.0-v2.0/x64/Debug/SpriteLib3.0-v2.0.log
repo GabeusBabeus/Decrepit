@@ -1,2 +1,98 @@
-﻿  TopLevelScene.cpp
-  SpriteLib3.0-v2.0.vcxproj -> C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
+﻿  AnimationSpritePlayground.cpp
+  BackEnd.cpp
+  BasementScene.cpp
+  BasementSceneListener.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(36,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(36,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(172,68): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(172,68): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(177,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(177,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(184,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\BasementSceneListener.cpp(184,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+  EffectManager.cpp
+  FirstCreation.cpp
+  ForestScene.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(57,82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(57,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(76,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(312,82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(312,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(331,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(452,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(452,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(471,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(577,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(577,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(577,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(577,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(577,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(577,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(580,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(580,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(580,57): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(580,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(580,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(580,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(583,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(583,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(583,57): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(583,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(583,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(583,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(589,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(589,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(589,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(589,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(589,39): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(589,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(852,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestScene.cpp(856,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ForestSceneListener.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(38,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(38,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(168,68): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(168,68): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(174,41): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(174,41): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(181,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(181,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+  Game.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\Game.cpp(142,79): warning C4244: 'argument': conversion from 'GLsizei' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\Game.cpp(142,51): warning C4244: 'argument': conversion from 'GLsizei' to 'float', possible loss of data
+  main.cpp
+  MainMenu.cpp
+  PhysicsPlayground.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlayground.cpp(27,65): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlayground.cpp(27,52): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlayground.cpp(28,62): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlayground.cpp(28,49): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlayground.cpp(625,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlayground.cpp(629,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PhysicsPlaygroundListener.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(36,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(36,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(218,68): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(218,68): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(223,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(223,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(230,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\PhysicsPlaygroundListener.cpp(230,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+  Player.cpp
+  RenderingSystem.cpp
+  Scene.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\Scene.cpp(79,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  TopLevelListener.cpp
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(36,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(36,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(124,68): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(124,68): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(129,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(129,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(136,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+C:\Users\gabem\Desktop\Game\Decrepit Files\SpriteLib3.0-v2.0\TopLevelListener.cpp(136,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
+  TopLevelScene.cpp
+  TowerGroundScene.cpp
+  Utilities.cpp
+  Generating Code...
+  SpriteLib3.0-v2.0.vcxproj -> C:\Users\gabem\Desktop\Game\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe

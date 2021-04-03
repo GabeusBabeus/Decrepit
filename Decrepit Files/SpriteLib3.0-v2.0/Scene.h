@@ -34,6 +34,8 @@ public:
 	void currentIndex(int currentIndex);
 	void nextIndex(int nextIndex);
 
+	int checkScene();
+
 	//Gamepad Input
 	//Because these are virtual you can override them in your inherited classes.
 	//The same way you do for Update().
@@ -79,6 +81,10 @@ public:
 
 	void setLevel(std::string lvl);
 	std::string getLevel();
+
+	int m_nextIndex;
+	int m_currentIndex;
+
 protected:
 	b2World* m_physicsWorld = nullptr;
 	b2Vec2 m_gravity = b2Vec2(float32(0.f), float32(0.f));
@@ -94,9 +100,10 @@ protected:
 private:
 	//Hello world entity number
 	int m_helloWorldSign = 0;
-	int m_nextIndex = 0;
-	int m_currentIndex = 0;
 	
+
+	
+
 };
 
 #endif // !__SCENE_H__

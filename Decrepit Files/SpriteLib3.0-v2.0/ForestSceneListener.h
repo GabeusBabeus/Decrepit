@@ -14,6 +14,7 @@ private:
 	void TriggerEnter(b2Fixture* sensor);
 	void TriggerExit(b2Fixture* sensor);
 
+	
 
 };
 

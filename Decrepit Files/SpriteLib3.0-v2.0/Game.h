@@ -92,15 +92,19 @@ private:
 	//Xbox Input
 	XInputManager input;
 
-	Scene *m_activeScene = nullptr;
+	Scene *m_activeScene;
 	std::vector<Scene*> m_scenes;
 
 	int activeScene;
+	
+	Scene index;
+	
+	
 
 protected:
 	//Scenes
 	
-	int index = 0;
+	//int index = m_activeScene->m_currentIndex;
 	
 };
 

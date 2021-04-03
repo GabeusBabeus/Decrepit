@@ -8,6 +8,7 @@
 #include <random>
 
 
+
 Game::~Game()
 {
 	//If window isn't equal to nullptr
@@ -32,7 +33,10 @@ Game::~Game()
 
 void Game::InitGame()
 {
-
+	
+	Scene index;
+	index.currentIndex(0);
+	index.nextIndex(0);
 
 	PhysicsSystem::CleanupBodies();
 
@@ -51,9 +55,9 @@ void Game::InitGame()
 	/*3*/m_scenes.push_back(new BasementScene("Basement"));
 	/*4*/m_scenes.push_back(new TopLevelScene("The End"));
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[4];
-	
-	
+	m_activeScene = m_scenes[index.m_currentIndex];
+
+
 	
 	m_activeScene->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 
@@ -128,6 +132,7 @@ void Game::Update()
 	//Update Physics System
 	PhysicsSystem::Update(m_register, m_activeScene->GetPhysicsWorld());
 
+	unsigned int index = m_activeScene->checkScene();
 	
 	if (index != 0) {
 		m_activeScene->Unload();
@@ -140,6 +145,7 @@ void Game::Update()
 		m_window->SetWindowName(m_activeScene->GetName());
 		PhysicsSystem::Init();
 	}
+	
 
 	//Updates the active scene
 	m_activeScene->Update();
