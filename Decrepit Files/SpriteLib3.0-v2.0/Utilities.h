@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "BackEnd.h"
 
+
+#include <Fmod/fmod.hpp>
 #include <entt/entity/registry.hpp>
 
 namespace Util
