@@ -30,12 +30,6 @@ public:
 	void CreateCameraEntity(bool mainCamera, float windowWidth, float windowHeight, float left, float right, float bottom, float top, 
 								float zNear, float zFar, float aspectRatio, bool vertScroll=false, bool horizScroll=false);
 
-
-	void currentIndex(int currentIndex);
-	void nextIndex(int nextIndex);
-
-	int checkScene();
-
 	//Gamepad Input
 	//Because these are virtual you can override them in your inherited classes.
 	//The same way you do for Update().
@@ -81,9 +75,6 @@ public:
 
 	void setLevel(std::string lvl);
 	std::string getLevel();
-
-	int m_nextIndex;
-	int m_currentIndex;
 
 protected:
 	b2World* m_physicsWorld = nullptr;

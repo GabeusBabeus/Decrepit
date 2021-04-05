@@ -85,37 +85,6 @@ void Scene::GUI()
 
 }
 
-
-
-void Scene::currentIndex(int currentInd)
-{
-	m_currentIndex = currentInd;
-}
-
-
-void Scene::nextIndex(int nextInd)
-{
-
-	m_nextIndex = nextInd;
-
-}
-
-int Scene::checkScene()
-{
-	if (Scene::m_currentIndex != Scene::m_nextIndex)
-	{
-
-		Scene::m_currentIndex = Scene::m_nextIndex;
-		return Scene::m_currentIndex;
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-
-
 void Scene::AdjustScrollOffset()
 {
 	float maxSizeX = ECS::GetComponent<Camera>(MainEntities::MainCamera()).GetOrthoSize().y;

@@ -34,10 +34,7 @@ Game::~Game()
 void Game::InitGame()
 {
 	
-	Scene index;
-	index.currentIndex(0);
-	index.nextIndex(0);
-
+	
 	PhysicsSystem::CleanupBodies();
 
 	//Initializes the backend with window width and height values
@@ -55,7 +52,7 @@ void Game::InitGame()
 	/*3*/m_scenes.push_back(new BasementScene("Basement"));
 	/*4*/m_scenes.push_back(new TopLevelScene("The End"));
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[index.m_currentIndex];
+	m_activeScene = m_scenes[0];
 
 
 	
@@ -96,18 +93,7 @@ bool Game::Run()
 		BackEnd::PollEvents(m_register, &m_close, &m_motion, &m_click, &m_wheel);
 		CheckEvents();
 
-		/*if (index == 2) {
-			
-
-			m_activeScene = m_scenes[index];
-			m_activeScene->Unload();
-
-			m_activeScene->InitScene(BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
-			m_register = m_activeScene->GetScene();
-			m_window->SetWindowName(m_activeScene->GetName());
-		}*/
-
-
+	
 
 		//does the window have keyboard focus?
 		if (Input::m_windowFocus)
@@ -126,27 +112,10 @@ void Game::Update()
 	Timer::Update();
 	//Update the backend
 	BackEnd::Update(m_register);
-
 	
-
 	//Update Physics System
 	PhysicsSystem::Update(m_register, m_activeScene->GetPhysicsWorld());
-
-	unsigned int index = m_activeScene->checkScene();
 	
-	if (index != 0) {
-		m_activeScene->Unload();
-
-		m_activeScene = m_scenes[index];
-
-		m_activeScene->InitScene(BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
-		m_register = m_activeScene->GetScene();
-
-		m_window->SetWindowName(m_activeScene->GetName());
-		PhysicsSystem::Init();
-	}
-	
-
 	//Updates the active scene
 	m_activeScene->Update();
 }

@@ -97,14 +97,14 @@ private:
 
 	int activeScene;
 	
-	Scene index;
+
 	
 	
 
 protected:
 	//Scenes
 	
-	//int index = m_activeScene->m_currentIndex;
+
 	
 };
 

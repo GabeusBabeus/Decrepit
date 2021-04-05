@@ -126,17 +126,14 @@ void ForestSceneListener::BeginContact(b2Contact* contact) {
 
 		if (filterA.categoryBits == TRIGGER)
 		{
-			change.nextIndex(1);
 			
-			std::cout << change.checkScene();
 			switchOneTransform.LoadSprite(switchOn, 64, 64);
 			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
 
 		}
 		else if (filterB.categoryBits == TRIGGER)
 		{
-			/*changeScene->nextIndex(1);
-			changeScene->checkScene(changeScene->m_currentIndex, changeScene->m_nextIndex);*/
+			
 			switchOneTransform.LoadSprite(switchOn, 64, 64);
 			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
 
