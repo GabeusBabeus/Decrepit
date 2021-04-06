@@ -32,7 +32,9 @@ protected:
 	int puzzleWall2;
 	int m_pointer = 0;
 	int pos = 0;
-
+	int cameraHolder = 0;
+	b2Vec2 leveloneSpawn = b2Vec2(-100, -60);
+	b2Vec2 leveltwoSpawn = b2Vec2(1400, 20);
 	
 
 };

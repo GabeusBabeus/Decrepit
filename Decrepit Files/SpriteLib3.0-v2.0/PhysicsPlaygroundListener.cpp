@@ -2,6 +2,7 @@
 
 #include "ECS.h"
 #include "Utilities.h"
+#include "Scene.h"
 using namespace std;
 PhysicsPlaygroundListener::PhysicsPlaygroundListener()
 	: b2ContactListener()
@@ -180,17 +181,45 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 		{
 			if (filterA.categoryBits == PLAYER)
 			{
-					player.SetPosition(b2Vec2(0, 350), true);
+				if (playerJump.currLevel == "levelone") {
+					
+					player.SetPosition(playerJump.leveltwoSpawn, true);
+					playerJump.currLevel = "leveltwo";
+				}
 				
+			}
+			else if (filterB.categoryBits == PLAYER)
+			{
+				if (playerJump.currLevel == "levelone") {
+					
+					player.SetPosition(b2Vec2(1400, 20), true);
+					playerJump.currLevel = "leveltwo";
+				}
+				
+			}
+		}
+		if ((filterA.categoryBits == PLAYER && filterB.categoryBits == LADDER2) || (filterB.categoryBits == PLAYER && filterA.categoryBits == LADDER2))
+		{
+			if (filterA.categoryBits == PLAYER)
+			{
+				if (playerJump.currLevel == "leveltwo") {
+
+					player.SetPosition(b2Vec2(565.f, 100.f), true);
+					playerJump.currLevel = "levelone";
+				}
 
 			}
 			else if (filterB.categoryBits == PLAYER)
 			{
-					player.SetPosition(b2Vec2(0, 350), true);
-				
+				if (playerJump.currLevel == "leveltwo") {
+
+					player.SetPosition(b2Vec2(565.f, 100.f), true);
+					playerJump.currLevel = "levelone";
+				}
 
 			}
 		}
+		
 		
 
 }

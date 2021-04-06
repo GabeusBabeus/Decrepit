@@ -52,7 +52,7 @@ void Game::InitGame()
 	/*3*/m_scenes.push_back(new BasementScene("Basement"));
 	/*4*/m_scenes.push_back(new TopLevelScene("The End"));
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[0];
+	m_activeScene = m_scenes[1];
 
 
 	
