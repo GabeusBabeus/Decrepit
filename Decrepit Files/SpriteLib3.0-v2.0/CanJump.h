@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <Box2D/Common/b2Math.h>
 class CanJump
 {
 public:
@@ -7,6 +9,9 @@ public:
 	int m_wallJumpNum = 1;
 	bool m_facingRight = true;
 	bool enableLadder = false;
+	std::string currLevel = "mainmenu";
+	b2Vec2 leveloneSpawn = b2Vec2(-100, -60);
+	b2Vec2 leveltwoSpawn = b2Vec2(1400, 20);
 private:
 };
 
