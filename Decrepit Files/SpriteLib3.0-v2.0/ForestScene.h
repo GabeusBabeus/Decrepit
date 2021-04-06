@@ -17,11 +17,11 @@ public:
 
 
 	void spawnLeftWall();
-	void spawnGenericGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
+	void spawnSprite(int xGround, int yGround, int xGrass, int yGrass, int grassAmount, int xGroundBox, int yGroundBox, int boxX, int boxY, int xSprite, int ySprite, int depth, std::string fileName);
 	void spawnGround();
-	void twoWideGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
-	void spawnConnectorGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
-	void floatingGround(int xGround, int yGround, int xGrass, int yGrass, int xGroundBox, int yGroundBox);
+	
+	
+
 
 
 	//Input overrides
@@ -32,7 +32,6 @@ public:
 protected:
 
 	ForestSceneListener listener;
-
 	
 	bool m_firstWindow = false;
 	bool m_secondWindow = false;
