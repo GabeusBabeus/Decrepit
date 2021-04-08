@@ -183,7 +183,7 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 			{
 				if (playerJump.currLevel == "levelone") {
 					
-					player.SetPosition(playerJump.leveltwoSpawn, true);
+					player.SetPosition(b2Vec2(2475, -60), true);
 					playerJump.currLevel = "leveltwo";
 				}
 				
@@ -192,7 +192,7 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 			{
 				if (playerJump.currLevel == "levelone") {
 					
-					player.SetPosition(b2Vec2(1400, 20), true);
+					player.SetPosition(b2Vec2(2475, -60), true);
 					playerJump.currLevel = "leveltwo";
 				}
 				

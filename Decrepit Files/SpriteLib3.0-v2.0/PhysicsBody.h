@@ -34,6 +34,8 @@ enum EntityCategories
 	DOOR		= 0x1024,
 	LADDER		= 0x2048,
 	LADDER2		= 0x2049,
+	LADDER3		= 0x2050,
+	LADDER4		= 0x2051,
 	SWITCH      = 0x4096,
 	BRIDGE		= 0x8192,
 	
