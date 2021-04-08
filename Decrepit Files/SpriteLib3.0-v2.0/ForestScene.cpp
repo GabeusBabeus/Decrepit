@@ -258,7 +258,7 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 	//Attach the register
 	ECS::AttachRegister(m_sceneReg);
-	
+
 
 
 	//Sets up aspect ratio for the camera
@@ -271,7 +271,7 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 		ForestScene::spawnGround();
 
 		//Platforms              GrX  /   GrY /  GrsX / GrsY/ GrsA/ GrbX / GrbY / Bx   / By  / SprX / SprY / Dpth / FileName
-		ForestScene::spawnSprite(-128.f, -128.f, -96.f, 16.f, 2.f , -32.f, -23.f, 192.f, 32.f, 384.f, 256.f, 2.f, "ForestTiles/Dirt/LargePlatform_1.png");
+		ForestScene::spawnSprite(-128.f, -128.f, -96.f, 16.f, 2.f, -32.f, -23.f, 192.f, 32.f, 384.f, 256.f, 2.f, "ForestTiles/Dirt/LargePlatform_1.png");
 		ForestScene::spawnSprite(384.f, -128.f, 288.f, 16.f, 3.f, 384.f, -23.f, 256.f, 32.f, 256.f, 256.f, 2.f, "ForestTiles/Dirt/Platform_2.png");
 		ForestScene::spawnSprite(896.f, -128.f, 802.f, 16.f, 3.f, 896.f, -23.f, 256.f, 32.f, 256.f, 256.f, 2.f, "ForestTiles/Dirt/Platform_3.png");
 		ForestScene::spawnSprite(1056.f, -160.f, 1056.f, -48.f, 0.f, 1056.f, -87.f, 64.f, 32.f, 64.f, 192.f, 2.f, "ForestTiles/Dirt/Connector_Platform.png");
@@ -376,8 +376,8 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 
 	}
-	
-	
+
+
 
 	//All Dem Pits
 	{
@@ -419,12 +419,16 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 	{
 		/*Scene::CreatePhysicsSprite(m_sceneReg, "LinkStandby", 80, 60, 1.f, vec3(0.f, 30.f, 2.f), b2_dynamicBody, 0.f, 0.f, true, true)*/
 
-		auto idle = File::LoadJSON("idle.json");
+
 
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainPlayer(entity, true);
+		std::cout << entity << std::endl;
+
+		auto animations = File::LoadJSON("player_animations.json");
 
 		//Add components
+		ECS::AttachComponent<Player>(entity);
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
@@ -432,16 +436,42 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<AnimationController>(entity);
 
 		//Sets up the components
-		std::string fileName = "spritesheets/PNG/PlayerIdle.png";
+		std::string fileName = "spritesheets/PNG/player_spritesheet.png";
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
 
+
+		
+
+		animController.InitUVs(fileName);
+
+		//std::string animations = "player_animations.json";
+
+		//ECS::GetComponent<Player>(entity).InitPlayer(fileName, animations, 25, 25, &ECS::GetComponent<Sprite>(entity), &ECS::GetComponent<AnimationController>(entity), &ECS::GetComponent<Transform>(entity));
+
+
+		//Idle Left
+		animController.AddAnimation(animations["IdleLeft"]);	//0
+		//Idle Right
+		animController.AddAnimation(animations["IdleRight"]);	//1
+		//WalkLeft
+		animController.AddAnimation(animations["WalkLeft"]);	//2
+		//WalkRight
+		animController.AddAnimation(animations["WalkRight"]);	//3
+		//Fall Left
+		animController.AddAnimation(animations["FallLeft"]);	//4
+		//Fall Right
+		animController.AddAnimation(animations["FallRight"]);	//5
+		//Jump Left
+		animController.AddAnimation(animations["JumpLeft"]);	//6
+		//Jump Right
+		animController.AddAnimation(animations["JumpRight"]);	//7
+
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 25, true, &animController);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 4.f));
 
-		auto& animController = ECS::GetComponent<AnimationController>(entity);
-		animController.InitUVs(fileName);
-		animController.AddAnimation(idle["idle"]);
-		animController.SetActiveAnim(0);
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 24, 24, true, &animController);
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -458,13 +488,77 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(entity, tempBody, float((tempSpr.GetHeight() - shrinkY) / 2.f), vec2(0.f, 0.f), false, PLAYER, ENVIRONMENT | ENEMY | OBJECTS | TRIGGER | HEXAGON, 1.f, 4.5f);
 
+
+
+
+
 		tempPhsBody.SetRotationAngleDeg(0.f);
 		tempPhsBody.SetFixedRotation(true);
 		tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
 		tempPhsBody.SetGravityScale(1.f);
 	}
 
-	
+
+
+	//Setup new Entity
+	{
+		auto entity = ECS::CreateEntity();
+		auto Abutton = File::LoadJSON("AButton.json");
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		std::string fileName = "spritesheets/PNG/ASpriteSheet.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(Abutton["AButton"]); // 8
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32, true, &animController);
+
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-64.f , 100.f, 2.f));
+	}
+
+
+	//Setup new Entity
+	{
+		auto entity = ECS::CreateEntity();
+		auto Dbutton = File::LoadJSON("DButton.json");
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		std::string fileName = "spritesheets/PNG/DSpriteSheet.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(Dbutton["DButton"]); // 9
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32, true, &animController);
+
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 100.f, 2.f));
+	}
+
+	//Setup new Entity
+	{
+		auto entity = ECS::CreateEntity();
+		auto Spacebutton = File::LoadJSON("Space.json");
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		std::string fileName = "spritesheets/PNG/SpaceSpriteSheet.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(Spacebutton["Space"]); // 10
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 32, true, &animController);
+
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(164.f, 0.f, 2.f));
+	}
+
+
 
 
 
@@ -556,6 +650,9 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 void ForestScene::Update()
 {
+	auto& animations = ECS::GetComponent<Player>(MainEntities::MainPlayer());
+	
+	animations.Update();
 
 }
 
@@ -596,7 +693,7 @@ void ForestScene::KeyboardDown()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 	auto& canJump = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
-
+	
 	
 
 	if (Input::GetKeyDown(Key::T))
@@ -610,8 +707,6 @@ void ForestScene::KeyboardDown()
 			
 			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 200000.f), true);
 			canJump.m_canJump = false;
-
-			
 
 		}
 	}

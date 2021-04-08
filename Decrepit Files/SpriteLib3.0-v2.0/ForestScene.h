@@ -8,6 +8,7 @@ class ForestScene : public Scene
 {
 public:
 
+	
 
 	ForestScene(std::string name);
 
@@ -38,7 +39,8 @@ protected:
 	bool m_firstWindow = false;
 	bool m_secondWindow = false;
 
-	int player, bridge, switchOne, switchTwo = 0;
+	int bridge, switchOne, switchTwo = 0;
+	
 	
 
 	std::string m_fileInput;

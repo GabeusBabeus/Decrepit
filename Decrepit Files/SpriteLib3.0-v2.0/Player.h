@@ -3,7 +3,6 @@
 
 #include "BackEnd.h"
 
-#define TOPDOWN
 
 enum AnimEnums
 {
@@ -25,14 +24,18 @@ enum AnimEnums
 	WALKDOWN,
 #endif
 	
-	ATTACKLEFT,
-	ATTACKRIGHT,
+	FALLLEFT,
+	FALLRIGHT,
 
 	//Only in Top down
 #ifdef TOPDOWN
 	ATTACKUP,
 	ATTACKDOWN
 #endif
+
+	JUMPLEFT,
+	JUMPRIGHT,
+
 };
 
 enum AnimTypes
@@ -45,7 +48,8 @@ enum AnimTypes
 #ifndef TOPDOWN
 	IDLE = 0,
 	WALK = 2,
-	ATTACK = 4
+	FALL = 4,
+	JUMP = 6
 #endif
 };
 
@@ -72,15 +76,15 @@ public:
 
 	void Update();
 	void MovementUpdate();
-	void AnimationUpdate();
+	
 
 private:
 	void SetActiveAnimation(int anim);
 
 	//Basically, any animation OTHER than moving will not have a cancel, and we'll be checking whether or not that animation is done
 	bool m_moving = false;
-	//Are you currently attacking?????
-	bool m_attacking = false;
+	//Are you currently jumping
+	bool m_jumping = false;
 	//Have we locked the player from moving during this animation?
 	bool m_locked = false;
 
@@ -98,7 +102,7 @@ private:
 	bool m_hasPhysics = false;
 
 	//Default animation direction (feel free to change this to suit your game. If you're making a side-scroller, left or right would be better
-	AnimDir m_facing = LEFT;
+	AnimDir m_facing = RIGHT;
 };
 
 #endif // !__PLAYER_H__

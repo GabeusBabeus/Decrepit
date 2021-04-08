@@ -2,6 +2,7 @@
 #include "ForestScene.h"
 #include "TowerGroundScene.h"
 #include "MainMenu.h"
+#include "AnimationSpritePlayground.h"
 #include "Scene.h"
 #include "BasementScene.h"
 #include "TopLevelScene.h"
@@ -48,10 +49,11 @@ void Game::InitGame()
 	
 	/*0*/m_scenes.push_back(new ForestScene("Decrepit"));
 	/*1*/m_scenes.push_back(new TowerGroundScene("Decrepit"));
-	/*3*/m_scenes.push_back(new BasementScene("Decrepit"));
-	/*4*/m_scenes.push_back(new TopLevelScene("Decrepit"));
+	/*2*/m_scenes.push_back(new BasementScene("Decrepit"));
+	/*3*/m_scenes.push_back(new TopLevelScene("Decrepit"));
+	
 	//Sets active scene reference to our scene
-	m_activeScene = m_scenes[1];
+	m_activeScene = m_scenes[0];
 
 
 	
@@ -141,10 +143,6 @@ void Game::Update()
 	//Update the backend
 	BackEnd::Update(m_register);
 	
-
-
-
-
 	//Update Physics System
 	PhysicsSystem::Update(m_register, m_activeScene->GetPhysicsWorld());
 	
