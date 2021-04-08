@@ -17,10 +17,25 @@ TowerGroundScene::TowerGroundScene(std::string name)
 
 }
 
+int TowerGroundScene::getSceneChange() {
+	return m_sceneChange;
+}
+
+void TowerGroundScene::setSceneChange(int sc) {
+	m_sceneChange = sc;
+}
+
+
 void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 {
 	//Dynamically allocates the register
 	m_sceneReg = new entt::registry;
+	m_physicsWorld = new b2World(m_gravity);
+
+	m_gravity = b2Vec2(0.f, -98.f);
+	m_physicsWorld->SetGravity(m_gravity);
+
+	m_physicsWorld->SetContactListener(&listener);
 
 	//Attach the register
 	ECS::AttachRegister(m_sceneReg);
@@ -2109,6 +2124,12 @@ void TowerGroundScene::KeyboardHold()
 		}
 
 	}
+
+	if (Input::GetKeyDown(Key::O))
+	{
+		Scene::setSceneChange(0);
+	}
+
 }
 
 void TowerGroundScene::KeyboardDown()

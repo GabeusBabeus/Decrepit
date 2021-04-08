@@ -1,7 +1,6 @@
 #include "ForestScene.h"
 #include "Utilities.h"
 #include <random>
-#include "Game.h"
 #include "Platform.h"
 #include "Door.h"
 
@@ -19,6 +18,15 @@ ForestScene::ForestScene(std::string name)
 	
 
 }
+
+int ForestScene::getSceneChange() {
+	return m_sceneChange;
+}
+
+void ForestScene::setSceneChange(int sc) {
+	m_sceneChange = sc;
+}
+
 
 void ForestScene::spawnLeftWall() {
 	{
@@ -240,9 +248,18 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 	//Dynamically allocates the register
 	m_sceneReg = new entt::registry;
+	m_physicsWorld = new b2World(m_gravity);
+
+	//No gravity this is a top down scene
+	m_gravity = b2Vec2(0.f, -98.f);
+	m_physicsWorld->SetGravity(m_gravity);
+
+	m_physicsWorld->SetContactListener(&listener);
 
 	//Attach the register
 	ECS::AttachRegister(m_sceneReg);
+	
+
 
 	//Sets up aspect ratio for the camera
 	float aspectRatio = windowWidth / windowHeight;
@@ -452,9 +469,6 @@ void ForestScene::InitScene(float windowWidth, float windowHeight)
 
 
 
-
-
-
 	////Switch One
 	//{
 	//	{
@@ -628,7 +642,17 @@ void ForestScene::KeyboardDown()
 		}
 	}
 
+	if (Input::GetKeyDown(Key::O))
+	{
+		Scene::setSceneChange(1);
+	}
+
+
 }
+
+
+
+
 
 void ForestScene::KeyboardUp()
 {

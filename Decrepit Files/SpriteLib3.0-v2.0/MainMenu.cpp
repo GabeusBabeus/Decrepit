@@ -7,10 +7,24 @@ MainMenu::MainMenu(std::string name) : Scene(name)
 	m_physicsWorld->SetGravity(m_gravity);
 }
 
+int MainMenu::getSceneChange() {
+	return m_sceneChange;
+}
+
+void MainMenu::setSceneChange(int sc) {
+	m_sceneChange = sc;
+}
+
+
 void MainMenu::InitScene(float windowWidth, float windowHeight)
 {
 	//Dynamically allocates the register 
 	m_sceneReg = new entt::registry;
+	m_physicsWorld = new b2World(m_gravity);
+
+	m_gravity = b2Vec2(0.f, 0.f);
+	m_physicsWorld->SetGravity(m_gravity);
+
 
 	ECS::AttachRegister(m_sceneReg);
 
@@ -124,6 +138,13 @@ void MainMenu::KeyboardDown()
 			pos = 0;
 		}
 	}
+
+	if (Input::GetKeyDown(Key::Enter))
+	{
+		Scene::setSceneChange(0);
+	}
+
+
 
 
 }

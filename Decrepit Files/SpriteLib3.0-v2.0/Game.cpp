@@ -46,11 +46,10 @@ void Game::InitGame()
 	//Creates a new scene.
 	//Replace this with your own scene.
 	
-	/*0*/m_scenes.push_back(new ForestScene("Forest Area"));
-	/*1*/m_scenes.push_back(new TowerGroundScene("Level 1"));
-	/*2*/m_scenes.push_back(new MainMenu("Decrepit"));
-	/*3*/m_scenes.push_back(new BasementScene("Basement"));
-	/*4*/m_scenes.push_back(new TopLevelScene("The End"));
+	/*0*/m_scenes.push_back(new ForestScene("Decrepit"));
+	/*1*/m_scenes.push_back(new TowerGroundScene("Decrepit"));
+	/*3*/m_scenes.push_back(new BasementScene("Decrepit"));
+	/*4*/m_scenes.push_back(new TopLevelScene("Decrepit"));
 	//Sets active scene reference to our scene
 	m_activeScene = m_scenes[1];
 
@@ -69,12 +68,12 @@ void Game::InitGame()
 
 bool Game::Run()
 {
-	
+
 	//While window is still open
 	while (m_window->isOpen())
 	{
 		
-		
+
 		//Clear window with activescene clearColor
 		m_window->Clear(m_activeScene->GetClearColor());
 		//Updates the game
@@ -101,10 +100,39 @@ bool Game::Run()
 			//Accept all input
 			AcceptInput();
 		}
+
+		Game::checkScene();
 	}
+
+
 
 	return true;
 }
+
+void Game::checkScene() 
+{
+
+	if (m_activeScene->getSceneChange() != -1) {
+
+		int temp = m_activeScene->getSceneChange();
+
+		//Resets Scene Change to be used again
+		m_activeScene->setSceneChange(-1);
+
+
+		//Backend Stuff to unload entities, and change the active scene
+		m_activeScene->Unload();
+		m_activeScene = m_scenes[temp];
+		m_activeScene->InitScene(BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
+		m_register = m_activeScene->GetScene();
+		m_window->SetWindowName(m_activeScene->GetName());
+
+
+	}
+
+
+}
+
 
 void Game::Update()
 {
@@ -113,6 +141,10 @@ void Game::Update()
 	//Update the backend
 	BackEnd::Update(m_register);
 	
+
+
+
+
 	//Update Physics System
 	PhysicsSystem::Update(m_register, m_activeScene->GetPhysicsWorld());
 	

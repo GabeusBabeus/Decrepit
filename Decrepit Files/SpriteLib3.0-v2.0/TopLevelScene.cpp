@@ -15,10 +15,25 @@ TopLevelScene::TopLevelScene(std::string name)
 
 }
 
+int TopLevelScene::getSceneChange() {
+	return m_sceneChange;
+}
+
+void TopLevelScene::setSceneChange(int sc) {
+	m_sceneChange = sc;
+}
+
+
 void TopLevelScene::InitScene(float windowWidth, float windowHeight)
 {
 	//Dynamically allocates the register
 	m_sceneReg = new entt::registry;
+	m_physicsWorld = new b2World(m_gravity);
+
+	m_gravity = b2Vec2(0.f, -98.f);
+	m_physicsWorld->SetGravity(m_gravity);
+
+	m_physicsWorld->SetContactListener(&listener);
 
 	//Attach the register
 	ECS::AttachRegister(m_sceneReg);

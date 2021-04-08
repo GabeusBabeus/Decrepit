@@ -20,7 +20,9 @@ public:
 	void spawnSprite(int xGround, int yGround, int xGrass, int yGrass, int grassAmount, int xGroundBox, int yGroundBox, int boxX, int boxY, int xSprite, int ySprite, int depth, std::string fileName);
 	void spawnGround();
 	
-	
+
+    int getSceneChange() override;
+	void setSceneChange(int sc) override;
 
 
 

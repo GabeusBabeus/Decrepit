@@ -19,6 +19,10 @@ public:
 	void KeyboardDown() override;
 	void KeyboardUp() override;
 
+	int getSceneChange() override;
+	void setSceneChange(int sc) override;
+
+
 protected:
 	int m_pointer;
 	int pos = 0;

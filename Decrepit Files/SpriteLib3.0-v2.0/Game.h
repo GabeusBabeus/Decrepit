@@ -65,6 +65,8 @@ public:
 	void KeyboardDown();
 	void KeyboardUp();
 
+	void checkScene();
+
 
 	//Mouse input
 	void MouseMotion(SDL_MouseMotionEvent evnt);

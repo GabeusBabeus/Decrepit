@@ -18,6 +18,10 @@ public:
 	void KeyboardDown() override;
 	void KeyboardUp() override;
 
+	int getSceneChange() override;
+	void setSceneChange(int sc) override;
+
+
 protected:
 
 	bool m_firstWindow = false;

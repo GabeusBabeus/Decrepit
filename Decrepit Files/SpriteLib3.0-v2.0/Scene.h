@@ -30,6 +30,9 @@ public:
 	void CreateCameraEntity(bool mainCamera, float windowWidth, float windowHeight, float left, float right, float bottom, float top, 
 								float zNear, float zFar, float aspectRatio, bool vertScroll=false, bool horizScroll=false);
 
+	virtual int getSceneChange();
+	virtual void setSceneChange(int sc);
+
 	//Gamepad Input
 	//Because these are virtual you can override them in your inherited classes.
 	//The same way you do for Update().
@@ -85,7 +88,7 @@ protected:
 	std::string currLevel = "mainmenu";
 	entt::registry* m_sceneReg = nullptr;	
 	std::string m_name = "Default Name";
-
+	int m_sceneChange = -1;
 
 
 	//static int startingScene;
