@@ -10,8 +10,13 @@ public:
 	bool m_facingRight = true;
 	bool enableLadder = false;
 	std::string currLevel = "mainmenu";
+	bool enterLeft = true;
+	bool enterRight = false;
 	b2Vec2 leveloneSpawn = b2Vec2(-100, -60);
 	b2Vec2 leveltwoSpawn = b2Vec2(1400, 20);
+	void setEnterLeft(bool t) {
+		enterLeft = t;
+	}
 private:
 };
 

@@ -713,7 +713,6 @@ void ForestScene::KeyboardDown()
 
 
 	if (Input::GetKeyDown(Key::M)) {
-		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
 		player.SetVelocity(vec3(0, 0, 0));
 		player.SetPosition(b2Vec2(20, 20), true);
 		player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);

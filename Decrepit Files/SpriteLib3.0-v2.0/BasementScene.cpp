@@ -881,7 +881,6 @@ void BasementScene::KeyboardDown()
 		}
 
 		if (Input::GetKeyDown(Key::M)) {
-			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
 			player.SetVelocity(vec3(0, 0, 0));
 			player.SetPosition(b2Vec2(-100, -40), true);
 			//player.SetPosition(b2Vec2(565, 200), true);

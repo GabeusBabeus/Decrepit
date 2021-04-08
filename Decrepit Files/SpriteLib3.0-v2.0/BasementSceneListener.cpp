@@ -55,14 +55,12 @@ void BasementSceneListener::BeginContact(b2Contact* contact)
 	{
 		if (filterA.categoryBits == PLAYER)
 		{
-			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
 			player.SetVelocity(vec3(0, 0, 0));
 			player.SetPosition(b2Vec2(-100, 15), true);
 			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
 		}
 		else if (filterB.categoryBits == PLAYER)
 		{
-			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).setSpawnCam(true);
 			player.SetVelocity(vec3(0, 0, 0));
 			player.SetPosition(b2Vec2(-100, 15), true);
 			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 1.f), true);
