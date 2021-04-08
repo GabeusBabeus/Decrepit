@@ -16,7 +16,7 @@ void HorizontalScroll::Update()
 	if (m_focus->GetPosition().x > m_cam->m_localPosition.x + m_offset)
 	{
 		if (level.currLevel == "mainmenu") {
-			float difference = m_focus->GetPosition().x - (m_cam->m_localPosition.x - m_offset);
+			float difference = m_focus->GetPosition().x - (m_cam->m_localPosition.x + m_offset);
 			m_cam->SetPosition(vec3(m_cam->GetPosition().x + difference, m_cam->GetPosition().y, m_cam->GetPosition().z));
 		}
 		//cout << m_cam->m_localPosition.x << endl;
@@ -45,6 +45,7 @@ void HorizontalScroll::Update()
 
 			m_cam->SetPosition(vec3(m_cam->GetPosition().x + difference, m_cam->GetPosition().y, m_cam->GetPosition().z));
 		}
+		
 	}
 	
 	//Below focus

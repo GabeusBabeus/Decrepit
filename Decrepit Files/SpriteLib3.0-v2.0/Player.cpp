@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "MainEntities.h"
 
 Player::Player()
 {
@@ -70,7 +71,7 @@ void Player::InitPlayer(std::string& fileName, std::string& animationJSON, int w
 void Player::Update()
 {
 	auto& canJump = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
-	auto& animController = ECS::GetComponent<AnimationController>(90);
+	auto& animController = ECS::GetComponent<AnimationController>(MainEntities::MainPlayer());
 
 	m_moving = false;
 	
@@ -105,7 +106,7 @@ void Player::Update()
 
 void Player::MovementUpdate()
 {
-	auto& animController = ECS::GetComponent<AnimationController>(90);
+	auto& animController = ECS::GetComponent<AnimationController>(MainEntities::MainPlayer());
 	auto& canJump = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
 
 	m_moving = false;

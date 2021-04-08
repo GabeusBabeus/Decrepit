@@ -69,6 +69,88 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		
 
 	}
+	//Link entity
+	{
+		/*Scene::CreatePhysicsSprite(m_sceneReg, "LinkStandby", 80, 60, 1.f, vec3(0.f, 30.f, 2.f), b2_dynamicBody, 0.f, 0.f, true, true)*/
+
+
+
+		auto entity = ECS::CreateEntity();
+		ECS::SetIsMainPlayer(entity, true);
+		
+
+		auto animations = File::LoadJSON("player_animations.json");
+
+		//Add components
+		ECS::AttachComponent<Player>(entity);
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<CanJump>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		//Sets up the components
+		std::string fileName = "spritesheets/PNG/player_spritesheet.png";
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+
+
+
+
+		animController.InitUVs(fileName);
+
+		//std::string animations = "player_animations.json";
+
+		//ECS::GetComponent<Player>(entity).InitPlayer(fileName, animations, 25, 25, &ECS::GetComponent<Sprite>(entity), &ECS::GetComponent<AnimationController>(entity), &ECS::GetComponent<Transform>(entity));
+
+
+		//Idle Left
+		animController.AddAnimation(animations["IdleLeft"]);	//0
+		//Idle Right
+		animController.AddAnimation(animations["IdleRight"]);	//1
+		//WalkLeft
+		animController.AddAnimation(animations["WalkLeft"]);	//2
+		//WalkRight
+		animController.AddAnimation(animations["WalkRight"]);	//3
+		//Fall Left
+		animController.AddAnimation(animations["FallLeft"]);	//4
+		//Fall Right
+		animController.AddAnimation(animations["FallRight"]);	//5
+		//Jump Left
+		animController.AddAnimation(animations["JumpLeft"]);	//6
+		//Jump Right
+		animController.AddAnimation(animations["JumpRight"]);	//7
+
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 25, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 4.f));
+
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = 0.f;
+		float shrinkY = 0.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_dynamicBody;
+		tempDef.position.Set(float32(-100.f), float32(20.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempPhsBody = PhysicsBody(entity, tempBody, float((tempSpr.GetHeight() - shrinkY) / 2.f), vec2(0.f, 0.f), false, PLAYER, ENVIRONMENT | ENEMY | OBJECTS | TRIGGER | HEXAGON, 1.f, 4.5f);
+
+
+
+
+
+		tempPhsBody.SetRotationAngleDeg(0.f);
+		tempPhsBody.SetFixedRotation(true);
+		tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
+		tempPhsBody.SetGravityScale(1.f);
+	}
 	//START MAINMENU
 	{
 		float moveX = -1000.f;
@@ -1989,52 +2071,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 
 
-	//Link entity
-	{
-		/*Scene::CreatePhysicsSprite(m_sceneReg, "LinkStandby", 80, 60, 1.f, vec3(0.f, 30.f, 2.f), b2_dynamicBody, 0.f, 0.f, true, true)*/
-		auto idle = File::LoadJSON("IDR.json");
-		auto entity = ECS::CreateEntity();
-		ECS::SetIsMainPlayer(entity, true);
-
-		//Add components
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-		ECS::AttachComponent<CanJump>(entity);
-		ECS::AttachComponent<AnimationController>(entity);
-
-		//Sets up the components
-		std::string fileName = "spritesheets/PNG/IdleR.png";
-		
-		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 8.f));
-
-		auto& animController = ECS::GetComponent<AnimationController>(entity);
-		animController.InitUVs(fileName);
-		animController.AddAnimation(idle["IDR"]);
-		animController.SetActiveAnim(0);
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 25, true, &animController);
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = 0.f;
-		float shrinkY = 0.f;
-
-		b2Body* tempBody;
-		b2BodyDef tempDef;
-		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-100.f), float32(20.f));
-
-		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
-		tempPhsBody = PhysicsBody(entity, tempBody, float((tempSpr.GetHeight() - shrinkY) / 2.f), vec2(0.f, 0.f), false, PLAYER, ENVIRONMENT | ENEMY | OBJECTS | TRIGGER | HEXAGON, 1.f, 4.5f);
-
-		tempPhsBody.SetRotationAngleDeg(0.f);
-		tempPhsBody.SetFixedRotation(true);
-		tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
-		tempPhsBody.SetGravityScale(1.f);
-	}
+	
 	
 	{
 		
@@ -2994,6 +3031,8 @@ void TowerGroundScene::Update()
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 	auto& level = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
 	auto& cam = ECS::GetComponent<Camera>(MainEntities::MainCamera());
+	auto& animations = ECS::GetComponent<Player>(MainEntities::MainPlayer());
+	animations.Update();
 	if (level.currLevel == "mainmenu") {
 		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(cameraHolder));
 		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(cameraHolder));
@@ -3017,7 +3056,7 @@ void TowerGroundScene::Update()
 
 		auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
 		auto& removeDoor = ECS::GetComponent<PhysicsBody>(MainEntities::doorBasement());
-		auto& anim = ECS::GetComponent<AnimationController>(MainEntities::MainPlayer());
+		//auto& anim = ECS::GetComponent<AnimationController>(MainEntities::MainPlayer());
 
 		//DOOR TO BASEMENT OPEN
 		if (door.doorOpen) {
