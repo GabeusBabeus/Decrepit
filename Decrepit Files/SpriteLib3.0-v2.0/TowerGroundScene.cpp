@@ -4,6 +4,7 @@
 #include "Utilities.h"
 #include <random>
 #include "Door.h"
+#include "Scroll.h"
 #include "LadderTrigger.h"
 #include "LadderTeleport.h"
 
@@ -43,8 +44,10 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 	//Sets up aspect ratio for the camera
 	float aspectRatio = windowWidth / windowHeight;
 	
-
-
+	EffectManager::CreateEffect(EffectType::Vignette, windowWidth, windowHeight);
+	VignetteEffect* vig = (VignetteEffect*)EffectManager::GetEffect(EffectManager::GetVignetteHandle());
+	vig->SetInnerRadius(0.f);
+	
 	//Setup MainCamera Entity
 	{
 		/*Scene::CreateCamera(m_sceneReg, vec4(-75.f, 75.f, -75.f, 75.f), -100.f, 100.f, windowWidth, windowHeight, true, true);*/
@@ -124,8 +127,9 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 25, true, &animController);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 4.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 8.f));
 
+		ECS::GetComponent<CanJump>(entity).inForest = false;
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -136,7 +140,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-100.f), float32(20.f));
+		tempDef.position.Set(float32(-20.f), float32(-50.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -151,115 +155,56 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
 		tempPhsBody.SetGravityScale(1.f);
 	}
-	//START MAINMENU
+	
+	//START END SCREEN
 	{
-		float moveX = -1000.f;
-		float moveY = -1000.f;
-		//main menu title image
+	float moveX = -3000.f;
+	//SKY
 		{
-			auto entity = ECS::CreateEntity();
+			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
 
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-
-			std::string fileName = "Tower Inside/Base/Menu/unknown.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 400,200);
-			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(20.f + moveX, -35.f + moveY, 1.f));
-		}
-		{
-			auto entity = ECS::CreateEntity();
-
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-
-			std::string fileName = "WallTiles/Background.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 600, 600);
-			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f + moveX, -35.f + moveY,0.f));
-		}
-		{
-			auto entity = ECS::CreateEntity();
-			cameraHolder = entity;
-			//ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-			std::string fileName = "Tower Inside/Base/Menu/Title_Image.png";
-			//ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 290, 185);
-			//ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-70.f + moveX, -50.f + moveY, -1.f));
-		}
-		{
-			auto entity = ECS::CreateEntity();
-			auto star = File::LoadJSON("Starlight.json");
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<AnimationController>(entity);
-			std::string fileName = "spritesheets/PNG/Stars_V3.png";
-
-			auto& animController = ECS::GetComponent<AnimationController>(entity);
-			animController.InitUVs(fileName);
-			animController.AddAnimation(star["Starlight"]);
-			animController.SetActiveAnim(0);
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 60, 82, true, &animController);
-
-			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(125.f + moveX, 20.f + moveY, 2.f));
-		}
-		//NAME
-		{
-			auto entity = ECS::CreateEntity();
-			auto name = File::LoadJSON("NAMESAKE.json");
-			ECS::AttachComponent<Sprite>(entity);
-			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<AnimationController>(entity);
-			std::string fileName = "spritesheets/PNG/NAME.png";
-
-			auto& animController = ECS::GetComponent<AnimationController>(entity);
-			animController.InitUVs(fileName);
-			animController.AddAnimation(name["NAME"]);
-			animController.SetActiveAnim(0);
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 350, 180, true, &animController);
-
-			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + moveX,40.f + moveY, 5.f));
-		}
-		{
-			auto idle = File::LoadJSON("IDR.json");
+			//Creates entity
 			auto entity = ECS::CreateEntity();
 
 			//Add components
 			ECS::AttachComponent<Sprite>(entity);
 			ECS::AttachComponent<Transform>(entity);
-			ECS::AttachComponent<AnimationController>(entity);
 
-			//Sets up the components
-			std::string fileName = "spritesheets/PNG/IdleR.png";
-
+			//Set up the components
+			std::string fileName = "ForestTiles/Sky.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 1280, 720);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-70.f + moveX, -10.f + moveY, 8.f));
-
-			auto& animController = ECS::GetComponent<AnimationController>(entity);
-			animController.InitUVs(fileName);
-			animController.AddAnimation(idle["IDR"]);
-			animController.SetActiveAnim(0);
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30, 40, true, &animController);
-
-			
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + moveX, 0.f, 8.f));
 		}
-		
-		//Pointer
 		{
 			auto entity = ECS::CreateEntity();
-			m_pointer = entity;
+			Scroll::setScrollEntity(6, entity);
+			//ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+			//std::string fileName = "Tower Inside/Base/Menu/Title_Image.png";
+			//ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 290, 185);
+			//ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + moveX, 0.f, -1.f));
+		}
+		{
+			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+			
+			//Add components
 			ECS::AttachComponent<Sprite>(entity);
 			ECS::AttachComponent<Transform>(entity);
 
-			std::string fileName = "Tower Inside/Base/Menu/TitleArrow.png";
-			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 22);
+			//Set up the components
+			std::string fileName = "Tower Inside V2/You_Win.png";
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 192, 64);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-120.f + moveX, -75.f + moveY, 2.f));
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + moveX, 0.f, 9.f));
 		}
+
 	}
+	//END END SCREEN
 	//START TOP LEVEL
 	{
 		float moveX = 1000.f;
@@ -282,6 +227,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + moveX, 100.f + moveY, 0.f));
 		}
+
 		//SKY
 		{
 			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
@@ -298,6 +244,109 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 2560, 720);
 			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 			ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f + moveX, 100.f + moveY, 0.f));
+		}
+		{
+			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+			auto scroll = File::LoadJSON("Scroll.json");
+			std::string fileName = "spritesheets/PNG/scroll.png";
+			//Add components
+			ECS::AttachComponent<Scroll>(entity);
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+			ECS::AttachComponent<PhysicsBody>(entity);
+			ECS::AttachComponent<AnimationController>(entity);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-110, 105, 4.f));
+			Scroll::setScrollEntity(4, entity);
+			auto& animController = ECS::GetComponent<AnimationController>(entity);
+			animController.InitUVs(fileName);
+			animController.AddAnimation(scroll["ScrollAnimation"]);
+			animController.SetActiveAnim(0);
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32, true, &animController);
+			//Set up the components
+			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+			float shrinkX = 20.f;
+			float shrinkY = 20.f;
+			b2Body* tempBody;
+			b2BodyDef tempDef;
+			tempDef.type = b2_staticBody;
+			tempDef.position.Set(float32(100 + moveX), float32(-45 + moveY));
+
+			tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+				float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, SCROLL4, PLAYER | ENEMY | OBJECTS | HEXAGON);
+			tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+		} 
+		{
+			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+			auto scroll = File::LoadJSON("Idol.json");
+			std::string fileName = "spritesheets/PNG/alter.png";
+			//Add components
+			ECS::AttachComponent<Scroll>(entity);
+			ECS::AttachComponent<Sprite>(entity);
+			ECS::AttachComponent<Transform>(entity);
+			ECS::AttachComponent<PhysicsBody>(entity);
+			ECS::AttachComponent<AnimationController>(entity);
+			ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-110, 105, 4.f));
+			Scroll::setScrollEntity(5, entity);
+			auto& animController = ECS::GetComponent<AnimationController>(entity);
+			animController.InitUVs(fileName);
+			animController.AddAnimation(scroll["Idol"]);
+			animController.SetActiveAnim(0);
+			ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 64, true, &animController);
+			//Set up the components
+			auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+			float shrinkX = 20.f;
+			float shrinkY = 20.f;
+			b2Body* tempBody;
+			b2BodyDef tempDef;
+			tempDef.type = b2_staticBody;
+			tempDef.position.Set(float32(350 + moveX), float32(-50 + moveY));
+
+			tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+			tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+				float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 20.f), false, SCROLL5, PLAYER | ENEMY | OBJECTS | HEXAGON);
+			tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+		}
+		{
+			/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+			//Creates entity
+			auto entity = ECS::CreateEntity();
+			ECS::AttachComponent<Scroll>(entity);
+			ECS::AttachComponent<Transform>(entity);
+			ECS::AttachComponent<PhysicsBody>(entity);
+			ECS::GetComponent<Transform>(entity).SetPosition(vec3(-110, 105, 4.f));
+			Scroll::setScrollEntity(6, entity);
+			auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+			float shrinkX = 0.f;
+			float shrinkY = 0.f;
+			b2Body* tempBody;
+			b2BodyDef tempDef;
+			tempDef.type = b2_staticBody;
+			tempDef.position.Set(float32(500 + moveX), float32(-40 + moveY));
+
+			tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+			tempPhsBody = PhysicsBody(entity, tempBody, float(32 - shrinkX),
+				float(100 - shrinkY), vec2(0.f, 0.f), false, DOORFIN, PLAYER | ENEMY | OBJECTS | HEXAGON);
+			tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
 		}
 
 		//left wall
@@ -757,6 +806,46 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 						tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
 
 					}
+					//SCROLL
+					{
+						/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
+
+						//Creates entity
+						auto entity = ECS::CreateEntity();
+						auto scroll = File::LoadJSON("Scroll.json");
+						std::string fileName = "spritesheets/PNG/scroll.png";
+						//Add components
+						ECS::AttachComponent<Scroll>(entity);
+						ECS::AttachComponent<Sprite>(entity);
+						ECS::AttachComponent<Transform>(entity);
+						ECS::AttachComponent<PhysicsBody>(entity);
+						ECS::AttachComponent<AnimationController>(entity);
+						ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+						ECS::GetComponent<Transform>(entity).SetPosition(vec3(-110, 105, 4.f));
+						Scroll::setScrollEntity(3, entity);
+						auto& animController = ECS::GetComponent<AnimationController>(entity);
+						animController.InitUVs(fileName);
+						animController.AddAnimation(scroll["ScrollAnimation"]);
+						animController.SetActiveAnim(0);
+						ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32, true, &animController);
+						//Set up the components
+						auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+						auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+						float shrinkX = 20.f;
+						float shrinkY = 20.f;
+						b2Body* tempBody;
+						b2BodyDef tempDef;
+						tempDef.type = b2_staticBody;
+						tempDef.position.Set(float32(180 + moveX), float32(40));
+
+						tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+						tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+							float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, SCROLL3, PLAYER | ENEMY | OBJECTS | HEXAGON);
+						tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+					}
 					//SMALL PLATFORM 3
 					{
 						float physBodyX = 140.f;
@@ -857,6 +946,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 							//Creates entity
 							auto entity = ECS::CreateEntity();
+							
 
 							//Add components
 							ECS::AttachComponent<Sprite>(entity);
@@ -911,7 +1001,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 							tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-							tempPhsBody = PhysicsBody(entity, tempBody, float(0), float(0), vec2(0.f, 0.f), false, LADDER2, PLAYER | OBJECTS);
+							tempPhsBody = PhysicsBody(entity, tempBody, float(0), float(0), vec2(0.f, 0.f), false, LADDER5, PLAYER | OBJECTS);
 							tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
 
 						}
@@ -1104,7 +1194,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 				//Creates entity
 				auto entity = ECS::CreateEntity();
-				ECS::SetIsKeyOne(entity, true);
+				ECS::SetIsKeyTwo(entity, true);
 
 				//Add components
 				ECS::AttachComponent<Sprite>(entity);
@@ -1112,7 +1202,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				ECS::AttachComponent<PhysicsBody>(entity);
 
 				//Sets up components
-				std::string fileName = "Tower Inside/Key.png";
+				std::string fileName = "Tower Inside V2/Key2.png";
 				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32);
 				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 4.f));
 
@@ -1129,7 +1219,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, KEY, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, KEY2, PLAYER | ENEMY | OBJECTS | HEXAGON);
 				tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
 
 			}
@@ -1745,11 +1835,12 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				}
 			}
 
-					//LADDER TO NEXT LEVEL
+					//LADDER TO NEXT LEVEL//LOCKED LADDER
 			{
 
 				//Creates entity
 				auto entity = ECS::CreateEntity();
+				lockedLadder = entity;
 
 				//Add components
 				ECS::AttachComponent<Sprite>(entity);
@@ -1759,11 +1850,11 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 
 				//Sets up components
-				std::string fileName = "Tower Inside/Base/Filling/Ladder.png";
+				std::string fileName = "Tower Inside V2/Ladder_Locked.png";
 				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 192);
 				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
-				ECS::GetComponent<Trigger*>(entity) = new LadderTrigger();
-				ECS::GetComponent<Trigger*>(entity)->SetTriggerEntity(entity);
+				//ECS::GetComponent<Trigger*>(entity) = new LadderTrigger();
+				//ECS::GetComponent<Trigger*>(entity)->SetTriggerEntity(entity);
 
 				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -1778,7 +1869,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), true, TRIGGER, PLAYER | OBJECTS);
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, DOOR2, PLAYER | OBJECTS);
 				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 
 			}
@@ -1991,7 +2082,45 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 
 
+	{
+		/*Scene::CreateSprite(m_sceneReg, "HelloWorld.png", 100, 60, 0.5f, vec3(0.f, 0.f, 0.f));*/
 
+		//Creates entity
+		auto entity = ECS::CreateEntity();
+		auto scroll = File::LoadJSON("Scroll.json");
+		std::string fileName = "spritesheets/PNG/scroll.png";
+		//Add components
+		ECS::AttachComponent<Scroll>(entity);
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-110, 105, 4.f));
+		Scroll::setScrollEntity(2, entity);
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(scroll["ScrollAnimation"]);
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32, true, &animController);
+		//Set up the components
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = 20.f;
+		float shrinkY = 20.f;
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(300 + moveX), float32(135));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+			float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, SCROLL2, PLAYER | ENEMY | OBJECTS | HEXAGON);
+		tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
+
+	}
 
 
 			//KEY
@@ -2007,7 +2136,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				ECS::AttachComponent<PhysicsBody>(entity);
 
 				//Sets up components
-				std::string fileName = "Tower Inside/Key.png";
+				std::string fileName = "Tower Inside V2/Key3.png";
 				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 32, 32);
 				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 4.f));
 
@@ -2423,12 +2552,14 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				auto scroll = File::LoadJSON("Scroll.json");
 				std::string fileName = "spritesheets/PNG/scroll.png";
 				//Add components
+				ECS::AttachComponent<Scroll>(entity);
 				ECS::AttachComponent<Sprite>(entity);
 				ECS::AttachComponent<Transform>(entity);
 				ECS::AttachComponent<PhysicsBody>(entity);
 				ECS::AttachComponent<AnimationController>(entity);
 				ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 				ECS::GetComponent<Transform>(entity).SetPosition(vec3(-110, 105, 4.f));
+				Scroll::setScrollEntity(1, entity);
 				auto& animController = ECS::GetComponent<AnimationController>(entity);
 				animController.InitUVs(fileName);
 				animController.AddAnimation(scroll["ScrollAnimation"]);
@@ -2437,7 +2568,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				//Set up the components
 				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
+				 
 				float shrinkX = 20.f;
 				float shrinkY = 20.f;
 				b2Body* tempBody;
@@ -2448,7 +2579,7 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 				tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
-					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, PICKUP, PLAYER | ENEMY | OBJECTS | HEXAGON);
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, SCROLL1, PLAYER | ENEMY | OBJECTS | HEXAGON);
 				tempPhsBody.SetColor(vec4(0.f, 0.f, 1.f, 0.3f));
 				
 			}
@@ -3028,38 +3159,31 @@ void TowerGroundScene::InitScene(float windowWidth, float windowHeight)
 
 void TowerGroundScene::Update()
 {
+	VignetteEffect* vig = (VignetteEffect*)EffectManager::GetEffect(EffectManager::GetVignetteHandle());
+	
+	
+	
+	if (m_lerpEnabled) {
+		m_tVal += Timer::deltaTime;
+		m_lerpVal = Util::Lerp<float>(m_val1, m_val2, m_tVal);
+		
+	}
+
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 	auto& level = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
 	auto& cam = ECS::GetComponent<Camera>(MainEntities::MainCamera());
 	auto& animations = ECS::GetComponent<Player>(MainEntities::MainPlayer());
 	animations.Update();
-	if (level.currLevel == "mainmenu") {
-		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(cameraHolder));
-		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(cameraHolder));
-	}
-	if (level.currLevel == "levelone") {
-		ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
-		ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
-		m_gravity = b2Vec2(0.f, -98.f);
-		m_physicsWorld->SetGravity(m_gravity);
-		player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
-		//std::cout << level.enterLeft;
-		if (level.enterLeft == true) {
-			
-			ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
-			ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
-			level.enterLeft = false;
-			cam.SetPositionX(-25.f);
-			cam.SetPosition(vec3(cam.GetPosition().x, cam.GetPosition().y, cam.GetPosition().z));
-		}
-	}
+	
+	
 
 		auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
 		auto& removeDoor = ECS::GetComponent<PhysicsBody>(MainEntities::doorBasement());
+		auto& removeLadder = ECS::GetComponent<PhysicsBody>(lockedLadder);
 		//auto& anim = ECS::GetComponent<AnimationController>(MainEntities::MainPlayer());
 
 		//DOOR TO BASEMENT OPEN
-		if (door.doorOpen) {
+		if (door.doorOpenOne) {
 
 			{
 
@@ -3096,8 +3220,77 @@ void TowerGroundScene::Update()
 			}
 			removeDoor.SetPosition(b2Vec2(-100, -400), true);
 			auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
-			door.doorOpen = false;
-			door.doorTransport = true;
+			door.doorOpenOne = false;
+			door.doorTransportOne = true;
+		}
+		if (door.doorOpenTwo) {
+
+			{
+
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Sprite>(entity);
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+				ECS::AttachComponent<Trigger*>(entity);
+
+
+				//Sets up components
+				std::string fileName = "Tower Inside/Base/Filling/Ladder.png";
+				ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 64, 192);
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
+				ECS::GetComponent<Trigger*>(entity) = new LadderTrigger();
+				ECS::GetComponent<Trigger*>(entity)->SetTriggerEntity(entity);
+
+				auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				float shrinkX = 40.f;
+				float shrinkY = 20.f;
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(350.f + 2500.f), float32(200.f));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
+					float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), true, TRIGGER, PLAYER | OBJECTS);
+				tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+
+			}
+			{
+
+				//Creates entity
+				auto entity = ECS::CreateEntity();
+
+				//Add components
+				ECS::AttachComponent<Transform>(entity);
+				ECS::AttachComponent<PhysicsBody>(entity);
+
+
+				//Sets up components
+				ECS::GetComponent<Transform>(entity).SetPosition(vec3(30.f, -20.f, 2.f));
+
+				auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+				b2Body* tempBody;
+				b2BodyDef tempDef;
+				tempDef.type = b2_staticBody;
+				tempDef.position.Set(float32(350.f + 1500.f), float32(265.f));
+
+				tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+				tempPhsBody = PhysicsBody(entity, tempBody, float(0), float(0), vec2(0.f, 0.f), false, LADDER3, PLAYER | OBJECTS);
+				tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
+
+			}
+			removeLadder.SetPosition(b2Vec2(-100, -4000), true);
+			auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
+			door.doorOpenTwo = false;
+			door.doorTransportTwo = true;
 		}
 		
 		
@@ -3108,56 +3301,40 @@ void TowerGroundScene::KeyboardHold()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 	auto& ladder = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
-	auto& pointer = ECS::GetComponent<Transform>(m_pointer);
-	
-	if (ladder.currLevel == "mainmenu") {
+	/*VignetteEffect* vig = (VignetteEffect*)EffectManager::GetEffect(EffectManager::GetVignetteHandle());
+	if (m_lerpEnabled) {
+		vig->SetOuterRadius(m_lerpVal);
+		if (m_tVal >= 1.f) {
+			m_lerpEnabled = false;
+			m_tVal = 0.f;
+
+		}
 		
+	}*/
+	
 
-		if (pos == 0) {
-			if (Input::GetKeyDown(Key::D)) {
-				pointer.SetPosition(vec3(pointer.GetPositionX() + 175.f, pointer.GetPositionY(), 2.f));
-				pos = 1;
 
-			}
-			if (Input::GetKeyDown(Key::Enter)) {
-				ladder.currLevel = "levelone";
-			}
-		}
-		if (pos == 1) {
-			if (Input::GetKeyDown(Key::A)) {
-				pointer.SetPosition(vec3(pointer.GetPositionX() - 175.f, pointer.GetPositionY(), 2.f));
-				pos = 0;
-			}
-			if (Input::GetKeyDown(Key::Enter)) {
-				exit(1);
-			}
-		}
+	float speed = 3.f;
+	b2Vec2 vel = b2Vec2(0.f, 0.f);
+
+	if (Input::GetKey(Key::A))
+	{
+		player.GetBody()->ApplyForceToCenter(b2Vec2(-200000.f * speed, 0.f), true);
+	}
+	if (Input::GetKey(Key::D))
+	{
+		player.GetBody()->ApplyForceToCenter(b2Vec2(200000.f * speed, 0.f), true);
 
 	}
-	if (ladder.currLevel != "mainmenu" ) {
 
 
-		float speed = 3.f;
-		b2Vec2 vel = b2Vec2(0.f, 0.f);
-
-		if (Input::GetKey(Key::A))
-		{
-			player.GetBody()->ApplyForceToCenter(b2Vec2(-200000.f * speed, 0.f), true);
+	if (ladder.enableLadder) {
+		if (Input::GetKey(Key::W)) {
+			player.SetPosition(b2Vec2(player.GetPosition().x, player.GetPosition().y + 1));
 		}
-		if (Input::GetKey(Key::D))
-		{
-			player.GetBody()->ApplyForceToCenter(b2Vec2(200000.f * speed, 0.f), true);
-
-		}
-
-
-		if (ladder.enableLadder) {
-			if (Input::GetKey(Key::W)) {
-				player.SetPosition(b2Vec2(player.GetPosition().x, player.GetPosition().y + 1));
-			}
-		}
-
 	}
+
+	
 
 	if (Input::GetKeyDown(Key::O))
 	{
@@ -3173,7 +3350,7 @@ void TowerGroundScene::KeyboardDown()
 	auto& playerTrans = ECS::GetComponent<Transform>(MainEntities::MainPlayer());
 	
 
-
+	//REMOVE
 	if (Input::GetKeyDown(Key::T))
 	{
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
@@ -3190,24 +3367,25 @@ void TowerGroundScene::KeyboardDown()
 
 			}
 		}
-
+		//REMOVE
 		if (Input::GetKeyDown(Key::M)) {
 			player.SetVelocity(vec3(0, 0, 0));
-			player.SetPosition(b2Vec2(-100 + 1000, 20 + 1000),true);
+			player.SetPosition(b2Vec2(-100 + 1000, 20 + 1000 ),true);
 			//player.SetPosition(b2Vec2(565, 200), true);
 			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
-			/*mciSendString("open \"music.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
-			mciSendString("play mp3", NULL, 0, NULL);*/
-		}
-		if (Input::GetKeyDown(Key::N)) { 
+			canJump.currLevel = "toplevel";
 			canJump.enterLeft = true;
 		}
-		if (Input::GetKeyDown(Key::Escape)) {
-			canJump.currLevel = "mainmenu";
-			m_gravity = b2Vec2(0.f, 0.f);
-			m_physicsWorld->SetGravity(m_gravity);
-			player.SetVelocity(vec3(0, 0, 0));
+		//REMOVE
+		if (Input::GetKeyDown(Key::N)) { 
+			//canJump.enterLeft = true;
+			std::cout << player.GetPosition().x  << " ";
+			std::cout << player.GetPosition().y << std::endl;
+			auto& door = ECS::GetComponent<Door>(MainEntities::doorBasement());
+			std::cout << door.doorOpenTwo;
+			std::cout << door.doorTransportTwo;
 		}
+		
 		if (canJump.m_wallJump) {
 			if (Input::GetKeyDown(Key::Space))
 			{

@@ -192,6 +192,7 @@
     <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scenes.h" />
+    <ClInclude Include="Scroll.h" />
     <ClInclude Include="Selectable.h" />
     <ClInclude Include="SelectiveColorEffect.h" />
     <ClInclude Include="SepiaEffect.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Scroll.cpp" />
     <ClCompile Include="Selectable.cpp" />
     <ClCompile Include="SelectiveColorEffect.cpp" />
     <ClCompile Include="SepiaEffect.cpp" />

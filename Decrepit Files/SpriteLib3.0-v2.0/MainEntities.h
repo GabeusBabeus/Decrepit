@@ -15,6 +15,11 @@ public:
 	static int switchTwo();
 	static int MainMenu();
 
+	static int keyTwo();
+	//static int scrollOne();
+	//static int scrollTwo();
+	//static int scrollThree();
+
 	//Setters
 	static void MainCamera(int main);
 	static void MainPlayer(int main);
@@ -22,6 +27,7 @@ public:
 	static void bridgeOne(int main);
 	static void bridgeTwo(int main);
 	static void keyOne(int main);
+	static void keyTwo(int main);
 	static void switchOne(int main);
 	static void switchTwo(int main);
 	static void MainMenu(int main);
@@ -30,6 +36,7 @@ private:
 	static int m_mainPlayer;
 	static int m_doorBasement;
 	static int m_keyOne;
+	static int m_keyTwo;
 	static int m_switchOne;
 	static int m_switchTwo;
 	static int m_bridgeOne;
