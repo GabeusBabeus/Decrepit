@@ -107,10 +107,10 @@ void ECS::SetMainMenu(unsigned entity, bool menu)
 
 
 
-//void ECS::SetIsKeyTwo(unsigned entity, bool key)
-//{
-//	if (key)
-//	{
-//		MainEntities::keyTwo(entity);
-//	}
-//}
+void ECS::SetIsKeyTwo(unsigned entity, bool key)
+{
+	if (key)
+	{
+		MainEntities::keyTwo(entity);
+	}
+}

@@ -58,6 +58,7 @@ public:
 	static void SetIsBridgeOne(unsigned entity, bool bridge);
 	static void SetIsBridgeTwo(unsigned entity, bool bridge);
 	static void SetIsKeyOne(unsigned entity, bool key);
+	static void SetIsKeyTwo(unsigned entity, bool key);
 	static void SetIsSwitchOne(unsigned entity, bool switchD);
 	static void SetIsSwitchTwo(unsigned entity, bool switchD);
 	static void SetMainMenu(unsigned entity, bool menu);

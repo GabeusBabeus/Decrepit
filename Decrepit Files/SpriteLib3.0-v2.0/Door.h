@@ -2,9 +2,12 @@
 class Door
 {
 public:
-	bool doorOpen;
-	bool haveKey = false;
-	bool doorTransport;
+	bool doorOpenOne;
+	bool doorOpenTwo = false;;
+	bool haveKeyOne = false;
+	bool haveKeyTwo = false;
+	bool doorTransportOne;
+	bool doorTransportTwo = false;
 private:
 
 };
