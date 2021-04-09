@@ -37,8 +37,19 @@ protected:
 	int m_pointer = 0;
 	int pos = 0;
 	int cameraHolder = 0;
+	int lockedLadder = 0;
 	b2Vec2 leveloneSpawn = b2Vec2(-100, -60);
 	b2Vec2 leveltwoSpawn = b2Vec2(1400, 20);
+
+	bool m_lerpEnabled = false;
+	float m_val1 = 0.f;
+	float m_val2 = 0.f;
+	float m_tVal = 0.f;
+	float m_lerpVal = 0.f;
+
+
+
+
 	
 
 };

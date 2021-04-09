@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  ForestSceneListener.cpp
 C:\Users\gabem\Desktop\Game 3\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(40,87): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
 C:\Users\gabem\Desktop\Game 3\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(40,87): warning C4302: 'type cast': truncation from 'void *' to 'int'
@@ -8,3 +9,7 @@ C:\Users\gabem\Desktop\Game 3\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListen
 C:\Users\gabem\Desktop\Game 3\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(163,52): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
 C:\Users\gabem\Desktop\Game 3\Decrepit Files\SpriteLib3.0-v2.0\ForestSceneListener.cpp(163,52): warning C4302: 'type cast': truncation from 'void *' to 'int'
   SpriteLib3.0-v2.0.vcxproj -> C:\Users\gabem\Desktop\Game 3\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
+=======
+﻿  HorizontalScroll.cpp
+  SpriteLib3.0-v2.0.vcxproj -> C:\Users\Admin\Documents\GitRepo\Decrepit\Decrepit Files\x64\Debug\SpriteLib3.0-v2.0.exe
+>>>>>>> main

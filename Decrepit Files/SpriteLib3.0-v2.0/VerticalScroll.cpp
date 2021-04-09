@@ -37,6 +37,24 @@ void VerticalScroll::Update()
 			}
 			m_cam->SetPosition(vec3(m_cam->GetPosition().x, m_cam->GetPosition().y + difference, m_cam->GetPosition().z));
 		}
+		if (level.currLevel == "basement") {
+			float difference = m_focus->GetPosition().y - (m_cam->m_localPosition.y + m_offset);
+
+			//Adjust the camera
+			if (m_cam->m_localPosition.y > 170) { //STOP THE CAM FROM GOING TO FAR RIGHT
+				difference = 0.f;
+			}
+			m_cam->SetPosition(vec3(m_cam->GetPosition().x, m_cam->GetPosition().y + difference, m_cam->GetPosition().z));
+		}
+		if (level.currLevel == "toplevel") {
+			float difference = m_focus->GetPosition().y - (m_cam->m_localPosition.y + m_offset);
+
+			//Adjust the camera
+			if (m_cam->m_localPosition.y > 1200) { //STOP THE CAM FROM GOING TO FAR RIGHT
+				difference = 0.f;
+			}
+			m_cam->SetPosition(vec3(m_cam->GetPosition().x, m_cam->GetPosition().y + difference, m_cam->GetPosition().z));
+		}
 	}
 
 	if (m_focus->GetPosition().y < m_cam->m_localPosition.y - m_offset)

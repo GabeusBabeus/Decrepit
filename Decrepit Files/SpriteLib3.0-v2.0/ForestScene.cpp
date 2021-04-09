@@ -888,6 +888,7 @@ void ForestScene::KeyboardDown()
 		player.SetVelocity(vec3(0, 0, 0));
 		player.SetPosition(b2Vec2(20, 20), true);
 		player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+		Scene::setSceneChange(1);
 		
 	}
 	if (canJump.m_wallJump) {

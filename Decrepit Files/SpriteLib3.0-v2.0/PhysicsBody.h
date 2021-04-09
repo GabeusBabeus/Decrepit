@@ -31,13 +31,22 @@ enum EntityCategories
 	TRIGGER		= 0x0128,
 	WALL        = 0x0256,
 	KEY			= 0x0512,
+	KEY2		= 0x0513,
 	DOOR		= 0x1024,
+	DOOR2		= 0x1025,
+	DOORFIN		= 0x1026,
 	LADDER		= 0x2048,
 	LADDER2		= 0x2049,
 	LADDER3		= 0x2050,
 	LADDER4		= 0x2051,
+	LADDER5		= 0x2052,
 	SWITCH      = 0x4096,
 	BRIDGE		= 0x8192,
+	SCROLL1		= 0x8193,
+	SCROLL2		= 0x8194,
+	SCROLL3		= 0x8195,
+	SCROLL4		= 0x8196,
+	SCROLL5		= 0x8197,
 	
 };
 
