@@ -52,6 +52,7 @@ void Game::InitGame()
 	/*2*/m_scenes.push_back(new BasementScene("Decrepit"));
 	/*3*/m_scenes.push_back(new TopLevelScene("Decrepit"));
 	
+
 	//Sets active scene reference to our scene
 	m_activeScene = m_scenes[0];
 

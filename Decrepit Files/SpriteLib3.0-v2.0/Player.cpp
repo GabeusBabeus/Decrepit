@@ -96,8 +96,6 @@ void Player::Update()
 		m_jumping = false;
 	}
 
-	
-
 	if (!m_locked) {
 		MovementUpdate();
 	}
@@ -158,6 +156,8 @@ void Player::MovementUpdate()
 		float speed = 15.f;
 
 		
+
+		
 		if (!m_jumping) {
 			
 			if (!m_locked) {
@@ -176,7 +176,22 @@ void Player::MovementUpdate()
 				}
 				else if (Input::GetKeyDown(Key::Space) && canJump.m_canJump)
 				{
+				
+					if (m_facing == RIGHT)
+					{
+						animController.SetActiveAnim(7);
+						m_jumping = true;
+					}
+					else if (m_facing == LEFT)
+					{
+						animController.SetActiveAnim(6);
+						m_jumping = true;
+					}
 					
+					m_locked = true;
+				}
+				else if (Input::GetKey(Key::A) && (Input::GetKeyDown(Key::Space))) {
+
 					if (m_facing == RIGHT)
 					{
 						animController.SetActiveAnim(7);
@@ -189,6 +204,7 @@ void Player::MovementUpdate()
 					}
 
 					m_locked = true;
+
 				}
 				else if (m_moving == false)
 				{

@@ -54,6 +54,7 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 			playerJump.m_wallJumpNum = 1;
 		}
 	}
+
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == ENEMY) || (filterB.categoryBits == PLAYER && filterA.categoryBits == ENEMY))
 	{
 		

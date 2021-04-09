@@ -186,7 +186,6 @@ int Scene::getSceneChange() {
 	return m_sceneChange;
 }
 
-
 void Scene::setSceneChange(int sc){
 	m_sceneChange = sc;
 }

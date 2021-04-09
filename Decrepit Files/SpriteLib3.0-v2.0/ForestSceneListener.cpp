@@ -9,6 +9,8 @@ ForestSceneListener::ForestSceneListener()
 
 }
 
+
+
 void ForestSceneListener::BeginContact(b2Contact* contact) {
 
 	b2Fixture* fixtureA = contact->GetFixtureA();
@@ -60,17 +62,25 @@ void ForestSceneListener::BeginContact(b2Contact* contact) {
 	{
 		if (filterA.categoryBits == PLAYER)
 		{
+
 			player.SetVelocity(vec3(0, 0, 0));
-			player.SetPosition(b2Vec2(-100, -40), true);
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+			player.SetPosition(b2Vec2(0, 30), true);
+			//player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+
+
+
 		}
 		else if (filterB.categoryBits == PLAYER)
 		{
+
 			player.SetVelocity(vec3(0, 0, 0));
-			player.SetPosition(b2Vec2(-100, -40), true);
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+			player.SetPosition(b2Vec2(0, 30), true);
+			//player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -1.f), true);
+
+
 		}
 	}
+
 
 	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == OBJECTS) || (filterB.categoryBits == PLAYER && filterA.categoryBits == OBJECTS))
 	{
@@ -111,29 +121,6 @@ void ForestSceneListener::BeginContact(b2Contact* contact) {
 			else {
 				playerJump.m_facingRight = false;
 			}
-
-		}
-	}
-
-
-	if ((filterA.categoryBits == PLAYER && filterB.categoryBits == TRIGGER) || (filterB.categoryBits == PLAYER && filterA.categoryBits == TRIGGER))
-	{
-
-		std::string switchOn = "ForestTiles/Interactables/Switch_On.png";
-		//std::string bridgeDown = "ForestTiles/Interactables/Bridge_Down.png";
-
-		if (filterA.categoryBits == TRIGGER)
-		{
-			
-			switchOneTransform.LoadSprite(switchOn, 64, 64);
-			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
-
-		}
-		else if (filterB.categoryBits == TRIGGER)
-		{
-			
-			switchOneTransform.LoadSprite(switchOn, 64, 64);
-			//bridgeOneTransform.LoadSprite(bridgeDown, 360, 64);
 
 		}
 	}
